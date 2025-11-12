@@ -1,5 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import {Login} from './presentation/pages/auth/login/login';
+import {PublicLayoutComponent} from './presentation/layouts/public-layout/public-layout-component';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +10,5 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('FrontEndTF');
+  protected readonly title = signal('Hominy');
 }
