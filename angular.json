@@ -25,6 +25,7 @@
               }
             ],
             "styles": [
+              "src/custom-theme.scss",
               "src/styles.css"
             ]
           },
@@ -53,6 +54,9 @@
           "defaultConfiguration": "production"
         },
         "serve": {
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          },
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
@@ -88,5 +92,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "fcb8b361-768f-4468-a9fa-8bb4f1f55bf0"
   }
 }
