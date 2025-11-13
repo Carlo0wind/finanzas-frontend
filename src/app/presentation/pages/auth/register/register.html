@@ -1,0 +1,83 @@
+<div class="page">
+  <!-- LOGO + TÍTULOS -->
+  <div class="header">
+    <img src="hominy.png" alt="Hominy Logo" class="logo">
+    <h1 class="title">Hominy</h1>
+    <p class="subtitle">Sistema de Simulación de Crédito para el Fondo MiVivienda</p>
+  </div>
+
+  <!-- CARD DE REGISTRO -->
+  <mat-card class="login-card">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+      <!-- TÍTULO -->
+      <h1 class="form-title">Registro</h1>
+
+      <!-- RAZÓN SOCIAL -->
+      <p class="form-subtitle">Razón social</p>
+      <mat-form-field appearance="outline" class="input-field" >
+        <input matInput formControlName="companyName" placeholder="Ej. Hominy SAC" [disabled]="isLoading">
+      </mat-form-field>
+
+      <!-- USUARIO -->
+      <p class="form-subtitle">Nombre de Usuario</p>
+      <mat-form-field appearance="outline" class="input-field">
+        <input matInput formControlName="username" placeholder="usuario123" [disabled]="isLoading">
+      </mat-form-field>
+
+      <!-- RUC -->
+      <p class="form-subtitle">RUC</p>
+      <mat-form-field appearance="outline" class="input-field">
+        <input matInput formControlName="ruc" placeholder="20123456789" maxlength="11" [disabled]="isLoading">
+      </mat-form-field>
+
+      <!-- EMAIL -->
+      <p class="form-subtitle">Correo electrónico</p>
+      <mat-form-field appearance="outline" class="input-field">
+        <input matInput formControlName="companyEmail" type="email" placeholder="correo@ejemplo.com" [disabled]="isLoading">
+      </mat-form-field>
+
+      <!-- CONTRASEÑA -->
+      <p class="form-subtitle">Contraseña</p>
+      <mat-form-field appearance="outline" class="input-field">
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" [disabled]="isLoading">
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <!-- CONFIRMAR CONTRASEÑA -->
+      <p class="form-subtitle">Confirmar contraseña</p>
+      <mat-form-field appearance="outline" class="input-field">
+        <input matInput type="password" formControlName="confirmPassword" [disabled]="isLoading">
+        <mat-error *ngIf="registerForm.hasError('mismatch')">
+          Las contraseñas no coinciden
+        </mat-error>
+      </mat-form-field>
+
+      <!-- BOTÓN -->
+      <button
+        mat-raised-button
+        color="primary"
+        class="login-button"
+        type="submit"
+        [disabled]="isLoading">
+        <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+        <span *ngIf="!isLoading">Crear Cuenta</span>
+        <span *ngIf="isLoading">Registrando...</span>
+      </button>
+    </form>
+  </mat-card>
+
+  <!-- LOGIN LINK -->
+  <p class="register-text">
+    ¿Ya tienes una cuenta?
+    <a (click)="goToLogin()">Inicia sesión aquí</a>
+  </p>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    © 2025 Hominy. Todos los derechos reservados.
+  </footer>
+</div>

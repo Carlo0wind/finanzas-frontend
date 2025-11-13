@@ -1,0 +1,50 @@
+<div class="page">
+
+  <!-- TÍTULO PRINCIPAL -->
+  <img src="hominy.png" alt="Hominy Logo" class="logo">
+  <h1 class="title">Hominy</h1>
+  <p class="subtitle">Sistema de Simulación de Crédito para el Fondo MiVivienda</p>
+
+  <!-- CARD DE LOGIN -->
+  <mat-card class="login-card">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <h1 class="form-title">Iniciar Sesión</h1>
+      <!-- USERNAME -->
+      <p class="form-subtitle">Nombre de Usuario</p>
+      <mat-form-field appearance="outline" class="email-field">
+        <input matInput formControlName="username" placeholder="usuario123">
+      </mat-form-field>
+
+      <!-- CONTRASEÑA -->
+      <p class="form-subtitle">Contraseña</p>
+      <mat-form-field appearance="outline" class="password-field">
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
+        <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <!-- RECORDARME + OLVIDÉ -->
+      <div class="actions-row">
+        <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+      </div>
+
+      <!-- BOTÓN -->
+      <button mat-raised-button color="primary" class="login-button" type="submit" [disabled]="isLoading">
+        <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+        <span *ngIf="!isLoading">Iniciar Sesión</span>
+        <span *ngIf="isLoading">Iniciando...</span>
+      </button>
+    </form>
+  </mat-card>
+
+  <!-- REGISTRO -->
+  <p class="register-text">
+    ¿No tienes una cuenta? <a routerLink="register">Regístrate aquí</a>
+  </p>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    © 2025 Hominy. Todos los derechos reservados.
+  </footer>
+</div>
