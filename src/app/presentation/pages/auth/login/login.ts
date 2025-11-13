@@ -81,7 +81,7 @@ export class Login{
             panelClass: ['success-snackbar']
           });
 
-          this.router.navigate(['dashboard']);
+          this.router.navigate(['private/dashboard']);
         },
         error: (error) => {
           this.isLoading = false;

@@ -1,0 +1,81 @@
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- Logo y Título //-->
+    <a routerLink="dashboard" class="logo-section">
+      <img src="hominy.png" alt="Hominy Logo" class="logo-image">
+      <span class="logo-text">Hominy</span>
+    </a>
+
+    <!-- Menú de navegación -->
+    <div class="nav-items">
+      @for (item of navItems; track item.route) {
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          class="nav-link">
+          {{ item.label }}
+        </a>
+      }
+    </div>
+
+    <!-- Avatar y menú de perfil -->
+    <div class="profile-section">
+      <button
+        class="avatar-button"
+        [class.menu-open]="isMenuOpen"
+        [matMenuTriggerFor]="profileMenu"
+        (menuOpened)="isMenuOpen = true"
+        (menuClosed)="isMenuOpen = false">
+        <div class="avatar">
+          {{ userInitial() }}
+        </div>
+      </button>
+
+      <!-- Menu desplegable -->
+      <mat-menu #profileMenu="matMenu" class="profile-menu" xPosition="before">
+        <div class="profile-menu-content" (click)="$event.stopPropagation()">
+          <!-- Header del menú con avatar grande -->
+          <div class="profile-header">
+            <div class="avatar-large">
+              {{ userInitial() }}
+            </div>
+            <div class="profile-info">
+              <div class="profile-name">{{ userName() }}</div>
+              <div class="profile-email">{{ userEmail() }}</div>
+            </div>
+          </div>
+
+          <!-- Botones de acción -->
+          <button mat-menu-item class="menu-button" (click)="editProfile()">
+            <mat-icon class="menu-icon">edit</mat-icon>
+            <span>Editar Perfil</span>
+          </button>
+
+          <button mat-menu-item class="menu-button" (click)="logout()">
+            <mat-icon class="menu-icon">logout</mat-icon>
+            <span>Cerrar Sesión</span>
+          </button>
+        </div>
+      </mat-menu>
+    </div>
+
+    <button class="mobile-menu-button" (click)="toggleMobileMenu()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+
+  <!-- responsivo con el if -->
+  @if (showMobileMenu) {
+    <div class="mobile-menu">
+      @for (item of navItems; track item.route) {
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          class="mobile-nav-link"
+          (click)="closeMobileMenu()">
+          {{ item.label }}
+        </a>
+      }
+    </div>
+  }
+</nav>

@@ -24,7 +24,6 @@ import {NgIf} from '@angular/common';
     MatError,
     MatIcon,
     MatIconButton,
-    RouterLink,
     MatProgressSpinner,
     NgIf
   ],
