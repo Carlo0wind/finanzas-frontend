@@ -3,7 +3,6 @@ import {MatIcon} from '@angular/material/icon';
 import {MatCard} from '@angular/material/card';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatFormField} from '@angular/material/form-field';
-import {MatCheckbox} from '@angular/material/checkbox';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {Router, RouterLink} from '@angular/router';
@@ -20,7 +19,6 @@ import {NgIf} from '@angular/common';
     MatCard,
     ReactiveFormsModule,
     MatFormField,
-    MatCheckbox,
     MatButton,
     MatIconButton,
     MatInput,
