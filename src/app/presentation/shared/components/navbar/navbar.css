@@ -71,12 +71,13 @@
 }
 
 .nav-link:hover {
-  color: #BE65C4;
+  color: #c46fc7;
+  font-weight: 300;
   background: rgba(190, 101, 196, 0.05);
 }
 
 .nav-link.active {
-  font-weight: 700;
+  font-weight: 900;
   color: #BE65C4;
 }
 

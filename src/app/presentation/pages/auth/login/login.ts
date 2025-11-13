@@ -1,9 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
-import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
+import {MatCard} from '@angular/material/card';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MatError, MatFormField} from '@angular/material/form-field';
-import {MatLabel} from '@angular/material/form-field';
+import {MatFormField} from '@angular/material/form-field';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
@@ -46,7 +45,6 @@ export class Login{
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      rememberMe: [false]
     });
   }
 

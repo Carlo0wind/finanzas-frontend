@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatCard} from '@angular/material/card';
-import {MatCheckbox} from '@angular/material/checkbox';
 import {MatError, MatFormField} from '@angular/material/form-field';
 import {MatIcon} from '@angular/material/icon';
-import {MatInput, MatLabel} from '@angular/material/input';
+import {MatInput} from '@angular/material/input';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Router, RouterLink} from '@angular/router';
+import {Router} from '@angular/router';
 import {RealStateCompanyService} from '../../../../services/real-state-company-service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {SignUpRequest} from '../../../../model/auth.model';
