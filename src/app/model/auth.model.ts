@@ -25,3 +25,11 @@ export interface RealStateCompanyResponse {
   username: string;
   companyEmail: string;
 }
+
+export interface UpdateRealStateCompanyRequest {
+  companyName: string;
+  username: string;
+  ruc: string;
+  companyEmail: string;
+  password: string;
+}

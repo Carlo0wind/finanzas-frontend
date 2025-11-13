@@ -1,0 +1,107 @@
+<div class="edit-profile-page">
+  <!-- Título -->
+  <h1 class="page-title">Edición de Perfil</h1>
+
+  <!-- Card principal -->
+  <mat-card class="profile-card">
+    <!-- Header con avatar e info -->
+    <div class="profile-header">
+      <!-- Avatar grande -->
+      <div class="avatar-large">
+        {{ userInitial() }}
+      </div>
+
+      <!-- Título y subtítulo -->
+      <h2 class="section-title">Información de Perfil</h2>
+      <p class="section-subtitle">
+        Actualiza los detalles de tu cuenta y gestiona tu información personal.
+      </p>
+    </div>
+
+    <!-- Línea separadora -->
+    <div class="divider"></div>
+
+    <!-- Formulario -->
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
+
+      <!-- Razón Social / Nombre de la Empresa -->
+      <div class="form-field">
+        <label class="field-label">Razón Social</label>
+        <input
+          type="text"
+          class="field-input"
+          formControlName="companyName"
+          placeholder="Nombre de la empresa"
+          [disabled]="isLoading()">
+      </div>
+
+      <!-- Username -->
+      <div class="form-field">
+        <label class="field-label">Nombre de Usuario</label>
+        <input
+          type="text"
+          class="field-input"
+          formControlName="username"
+          placeholder="Nombre de usuario"
+          [disabled]="isLoading()">
+      </div>
+
+      <!-- RUC -->
+      <div class="form-field">
+        <label class="field-label">RUC</label>
+        <input
+          type="text"
+          class="field-input"
+          formControlName="ruc"
+          placeholder="20123456789"
+          maxlength="11"
+          [disabled]="isLoading()">
+      </div>
+
+      <!-- Correo Electrónico -->
+      <div class="form-field">
+        <label class="field-label">Correo Electrónico</label>
+        <input
+          type="email"
+          class="field-input"
+          formControlName="companyEmail"
+          placeholder="correo@empresa.com"
+          [disabled]="isLoading()">
+      </div>
+
+      <!-- Contraseña (opcional para actualizar) -->
+      <div class="form-field">
+        <label class="field-label">Contraseña Nueva (opcional)</label>
+        <input
+          type="password"
+          class="field-input"
+          formControlName="password"
+          placeholder="Dejar en blanco para mantener la actual"
+          [disabled]="isLoading()">
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="form-actions">
+        <button
+          type="button"
+          class="btn-cancel"
+          (click)="onCancel()"
+          [disabled]="isLoading()">
+          Cancelar
+        </button>
+
+        <button
+          type="submit"
+          class="btn-submit"
+          [disabled]="profileForm.invalid || isLoading()">
+          @if (isLoading()) {
+            <mat-spinner diameter="20"></mat-spinner>
+            <span>Actualizando...</span>
+          } @else {
+            <span>Actualizar Perfil</span>
+          }
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>

@@ -1,7 +1,13 @@
 import {inject, Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {AuthenticatedResponse, RealStateCompanyResponse, SignInRequest, SignUpRequest} from '../model/auth.model';
+import {
+  AuthenticatedResponse,
+  RealStateCompanyResponse,
+  SignInRequest,
+  SignUpRequest,
+  UpdateRealStateCompanyRequest
+} from '../model/auth.model';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -24,5 +30,18 @@ export class RealStateCompanyService {
     );
   }
   //kkk funciona shrek
-
+  getRealStateCompanyById(id: number): Observable<RealStateCompanyResponse> {
+    return this.httpClient.get<RealStateCompanyResponse>(
+      `/api/v1/real-state-company/${id}`
+    );
+  }
+  updateRealStateCompany(
+    id: number,
+    request: UpdateRealStateCompanyRequest
+  ): Observable<RealStateCompanyResponse> {
+    return this.httpClient.put<RealStateCompanyResponse>(
+      `/api/v1/real-state-company/${id}`,
+      request
+    );
+  }
 }
