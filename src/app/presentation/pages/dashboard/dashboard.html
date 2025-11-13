@@ -1,1 +1,19 @@
-<p>dashboard works!</p>
+<div class="dashboard">
+  <h1 class="dashboard-title">Panel de Control</h1>
+  <p class="dashboard-subtitle">
+    Bienvenido al sistema de simulación de créditos. Selecciona una acción para comenzar.
+  </p>
+
+  <div class="cards-grid">
+    @for (card of cards; track card.title) {
+      <app-dashboard-card
+        [title]="card.title"
+        [description]="card.description"
+        [icon]="card.icon"
+        [iconBg]="card.iconBg"
+        [route]="card.route"
+        [linkText]="card.linkText">
+      </app-dashboard-card>
+    }
+  </div>
+</div>

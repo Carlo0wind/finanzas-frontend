@@ -1,0 +1,13 @@
+<div class="action-card">
+  <div class="icon-container" [style.background-color]="iconBg">
+    <mat-icon class="material-icon">{{ icon }}</mat-icon>
+  </div>
+
+  <h3 class="card-title">{{ title }}</h3>
+  <p class="card-description">{{ description }}</p>
+
+  <a class="card-link" [routerLink]="route">
+    {{ linkText }}
+    <mat-icon class="arrow-icon">arrow_forward</mat-icon>
+  </a>
+</div>
