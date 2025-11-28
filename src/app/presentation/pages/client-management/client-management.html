@@ -1,1 +1,103 @@
-<p>client-management works!</p>
+<div class="clients-page">
+  <!-- el header -->
+  <div class="page-header">
+    <div class="header-text">
+      <h1 class="page-title">Gestión de Clientes</h1>
+      <p class="page-subtitle">
+        Administra la información de tus clientes y sus perfiles financieros.
+      </p>
+    </div>
+  </div>
+
+  <!-- barra-->
+  <div class="actions-bar">
+    <div class="search-box">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input
+        type="text"
+        class="search-input"
+        [(ngModel)]="searchTerm"
+        placeholder="Buscar por DNI, nombre o email...">
+    </div>
+
+    <button
+      class="btn-new-client"
+      (click)="openNewClientModal()">
+      <mat-icon>add</mat-icon>
+      Nuevo Cliente
+    </button>
+  </div>
+
+  <!-- Tabla de Clientes -->
+  <div class="table-container">
+    @if (isLoading()) {
+      <div class="loading-state">
+        <p>Cargando clientes...</p>
+      </div>
+    } @else if (filteredClients().length === 0) {
+      <div class="empty-state">
+        <mat-icon>people_outline</mat-icon>
+        <p>No se encontraron clientes</p>
+        <button class="btn-empty-action" (click)="openNewClientModal()">
+          <mat-icon>add</mat-icon>Agregar primer cliente
+        </button>
+      </div>
+    } @else {
+      <table class="clients-table">
+        <thead>
+        <tr>
+          <th>NOMBRE</th>
+          <th>DNI</th>
+          <th>EDAD</th>
+          <th>SALARIO</th>
+          <th>DEPENDIENTES</th>
+          <th>ESTADO LABORAL</th>
+          <th>EMAIL</th>
+          <th>ACCIONES</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (client of filteredClients(); track client.id) {
+            <tr>
+              <td class="cell-name">{{ getFullName(client) }}</td>
+              <td>{{ client.dni }}</td>
+              <td>{{ client.age }}</td>
+              <td class="cell-salary">
+                <div class="salary-container">
+                  <span>{{ client.currencySymbol }}{{ formatAmount(client.monthlyIncome) }}</span>
+                  <button
+                    class="btn-currency"
+                    (click)="exchangeCurrency(client)"
+                    [title]="'Realizar conversión a ' + (client.currencySymbol === 'S/ ' ? 'Dólares' : 'Soles')">
+                    <mat-icon>sync_alt</mat-icon>
+                  </button>
+                </div>
+              </td>
+              <td>{{ client.dependentsNumber }}</td>
+              <td>
+                <span class="status-badge" [class]="getStatusClass(client)">
+                  {{ getEmploymentStatus(client) }}
+                </span>
+              </td>
+              <td>{{ client.email }}</td>
+              <td class="cell-actions">
+                <button
+                  class="btn-icon btn-edit"
+                  (click)="openEditClientModal(client)"
+                  title="Editar cliente">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  class="btn-icon btn-delete"
+                  (click)="confirmDelete(client)"
+                  title="Eliminar cliente">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+</div>

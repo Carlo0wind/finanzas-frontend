@@ -1,0 +1,385 @@
+.clients-page {
+  padding: 40px;
+  max-width: 1440px;
+  margin: 0 auto;
+  animation: fadeIn 0.4s ease-in-out;
+}
+/*cuando entras al clientManagement*/
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header */
+.page-header {
+  margin-bottom: 32px;
+}
+
+.page-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 40px;
+  color: #111827;
+  margin: 0 0 8px 0;
+}
+
+.page-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #34363d;
+  margin: 0 0 3rem 0;
+}
+
+/* barra de acciones de busqueda y nuevo cliente */
+.actions-bar {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.search-box {
+  position: relative;
+  flex: 1;
+  max-width: 1001px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #565D6D;
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.search-input {
+  width: 100%;
+  height: 48px;
+  padding-left: 42px;
+  padding-right: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  color: #171A1F;
+  background: #FFFFFF;
+  border: 1px solid #DEE1E6;
+  border-radius: 3px;
+  outline: none;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+.search-input:hover {
+  border-color: #BE65C4;
+}
+
+.search-input:focus {
+  border-color: #BE65C4;
+  box-shadow: 0 0 0 3px rgba(190, 101, 196, 0.1);
+}
+
+.btn-new-client {
+  height: 48px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 500;
+  color: #FFFFFF;
+  background: #a300ae;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-new-client mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.btn-new-client:hover {
+  background: #B54EBC;
+}
+
+.btn-new-client:active {
+  background: #A441AB;
+}
+
+/* Tabla */
+.table-container {
+  background: #FFFFFF;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.clients-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.clients-table thead {
+  background: #F8F9FA;
+}
+
+.clients-table th {
+  padding: 16px 24px;
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #565D6D;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.clients-table td {
+  padding: 16px 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: #171A1F;
+  border-top: 1px solid #DEE1E6;
+}
+
+.clients-table tbody tr {
+  transition: background 0.2s;
+}
+
+.clients-table tbody tr:hover {
+  background: #F8F9FA;
+}
+
+.cell-name {
+  font-weight: 500;
+}
+
+.cell-salary {
+  min-width: 180px;
+}
+
+.salary-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-currency {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid #DEE1E6;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #BE65C4;
+}
+
+.btn-currency mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.btn-currency:hover {
+  background: rgba(190, 101, 196, 0.08);
+  border-color: #BE65C4;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.status-badge.unemployed {
+  background: #FFEBEE;
+  color: #C62828;
+}
+
+.status-badge.working {
+  background: #E8F5E9;
+  color: #2E7D32;
+}
+
+.status-badge.not-working {
+  background: #FFEBEE;
+  color: #C62828;
+}
+
+.status-badge.dependent {
+  background: #E3F2FD;
+  color: #1976D2;
+}
+
+.status-badge.independent {
+  background: #FFF3E0;
+  color: #F57C00;
+}
+
+.cell-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-icon mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.btn-edit {
+  color: #565D6D;
+}
+
+.btn-edit:hover {
+  background: rgba(86, 93, 109, 0.08);
+}
+
+.btn-delete {
+  color: #D33131;
+}
+
+.btn-delete:hover {
+  background: rgba(211, 49, 49, 0.08);
+}
+
+/* css cuando no hay clientes, agregar primer cliente  */
+.empty-state,
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.empty-state mat-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  color: #9CA3AF;
+  margin-bottom: 16px;
+}
+
+.empty-state p {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  color: #6B7280;
+  margin-bottom: 24px;
+}
+
+/* Actualizar botón "Agregar primer cliente" */
+.btn-empty-action {
+  height: 48px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 500;
+  color: #FFFFFF;
+  background: #a300ae;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-empty-action mat-icon {
+  font-size: 32px;
+  margin-top: 10px;
+  width: 40px;
+  height: 32px;
+  color: #FFFFFF;
+}
+
+.btn-empty-action:hover {
+  background: #B54EBC;
+}
+
+
+@media (max-width: 1200px) {
+  .clients-table {
+    font-size: 13px;
+  }
+
+  .clients-table th,
+  .clients-table td {
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .clients-page {
+    padding: 24px 16px;
+  }
+
+  .page-title {
+    font-size: 28px;
+  }
+
+  .actions-bar {
+    flex-direction: column;
+  }
+
+  .search-box {
+    max-width: 100%;
+  }
+
+  .btn-new-client {
+    width: 100%;
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+
+  .clients-table {
+    min-width: 1000px;
+  }
+}

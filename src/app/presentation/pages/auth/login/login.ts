@@ -70,7 +70,7 @@ export class Login{
             localStorage.setItem('rememberedUsername', response.username);
           }
 
-          this.snackBar.open(`¡Bienvenido ${response.companyName}!`, 'Cerrar', {
+          this.snackBar.open(`¡Bienvenid@ ${response.companyName}!`, 'Cerrar', {
             duration: 3000,
             horizontalPosition: 'center',
             verticalPosition: 'top',
