@@ -1,0 +1,289 @@
+<div class="modal-container">
+  <!-- header -->
+  <div class="modal-header">
+    <h2 class="modal-title">
+      {{ data.mode === 'create' ? 'Nuevo Cliente' : 'Editar Cliente' }}
+    </h2>
+    <button
+      mat-icon-button
+      class="close-button"
+      (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- form completo -->
+  <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="modal-form">
+
+    <!-- Sección: Información Personal -->
+    <div class="form-section">
+      <h3 class="section-title">Información Personal</h3>
+
+      <!-- Nombre y Apellido -->
+      <div class="form-row">
+        <div class="form-field">
+          <label class="field-label">
+            Nombre <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            class="field-input"
+            formControlName="firstname"
+            placeholder="Juan">
+          @if (isFieldInvalid('firstname')) {
+            <span class="error-text">El nombre es requerido</span>
+          }
+        </div>
+
+        <div class="form-field">
+          <label class="field-label">
+            Apellido <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            class="field-input"
+            formControlName="lastname"
+            placeholder="Pérez García">
+          @if (isFieldInvalid('lastname')) {
+            <span class="error-text">El apellido es requerido</span>
+          }
+        </div>
+      </div>
+
+      <!-- DNI y Edad -->
+      <div class="form-row">
+        <div class="form-field">
+          <label class="field-label">
+            DNI <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            class="field-input"
+            formControlName="dni"
+            placeholder="70446910"
+            maxlength="8">
+          @if (isFieldInvalid('dni')) {
+            <span class="error-text">
+              @if (clientForm.get('dni')?.hasError('required')) {
+                El DNI es requerido
+              }
+              @if (clientForm.get('dni')?.hasError('minlength')) {
+                El DNI debe tener 8 dígitos
+              }
+            </span>
+          }
+        </div>
+
+        <div class="form-field">
+          <label class="field-label">
+            Edad <span class="required">*</span>
+          </label>
+          <input
+            type="number"
+            class="field-input"
+            formControlName="age"
+            placeholder="18"
+            min="18"
+            max="100">
+          @if (isFieldInvalid('age')) {
+            <span class="error-text">La edad debe estar entre 18 y 100</span>
+          }
+        </div>
+      </div>
+
+      <!-- ✨ Dependientes ahora en Información Personal -->
+      <div class="form-field full-width">
+        <label class="field-label">
+          Número de Dependientes
+        </label>
+        <input
+          type="number"
+          class="field-input"
+          formControlName="dependentsNumber"
+          placeholder="0"
+          min="0">
+      </div>
+    </div>
+
+    <div class="form-divider"></div>
+
+    <!-- Sección: Situación Laboral -->
+    <div class="form-section">
+      <h3 class="section-title">Situación Laboral</h3>
+
+      <!-- ¿Está trabajando? -->
+      <div class="form-field full-width">
+        <label class="field-label">
+          ¿Está trabajando actualmente? <span class="required">*</span>
+        </label>
+        <select class="field-select" formControlName="isWorking">
+          <option value="">Selecciona una opción</option>
+          <option value="true">Sí</option>
+          <option value="false">No</option>
+        </select>
+        @if (isFieldInvalid('isWorking')) {
+          <span class="error-text">Este campo es requerido</span>
+        }
+      </div>
+
+      <!-- Campos solo si está trabajando -->
+      @if (clientForm.get('isWorking')?.value === 'true') {
+        <!-- Moneda -->
+        <div class="form-field full-width">
+          <label class="field-label">
+            Moneda <span class="required">*</span>
+          </label>
+          <select class="field-select" formControlName="currencyId">
+            <option value="">Selecciona una moneda</option>
+            @for (currency of currencies(); track currency.id) {
+              <option [value]="currency.id">
+                {{ getCurrencyDisplayName(currency) }} ({{ currency.symbol }})
+              </option>
+            }
+          </select>
+          @if (isFieldInvalid('currencyId')) {
+            <span class="error-text">Selecciona una moneda</span>
+          }
+        </div>
+
+        <!-- Ingresos Mensuales -->
+        <div class="form-field full-width">
+          <label class="field-label">
+            Ingresos Mensuales
+            @if (getCurrencySymbolForLabel()) {
+              <span>({{ getCurrencySymbolForLabel() }})</span>
+            }
+            <span class="required">*</span>
+          </label>
+          <input
+            type="number"
+            class="field-input"
+            [class.field-disabled]="clientForm.get('monthlyIncome')?.disabled"
+            formControlName="monthlyIncome"
+            placeholder="1510.00"
+            min="0"
+            step="0.01">
+          @if (!clientForm.get('currencyId')?.value) {
+            <span class="helper-text">Primero selecciona una moneda</span>
+          }
+          @if (isFieldInvalid('monthlyIncome')) {
+            <span class="error-text">Los ingresos son requeridos</span>
+          }
+        </div>
+
+        <!-- Tipo de Empleo y Años Trabajando -->
+        <div class="form-row">
+          <div class="form-field">
+            <label class="field-label">
+              Tipo de Empleo <span class="required">*</span>
+            </label>
+            <select class="field-select" formControlName="isDependent">
+              <option value="">Selecciona una opción</option>
+              <option value="true">Dependiente</option>
+              <option value="false">Independiente</option>
+            </select>
+            @if (isFieldInvalid('isDependent')) {
+              <span class="error-text">Este campo es requerido</span>
+            }
+          </div>
+
+          <div class="form-field">
+            <label class="field-label">
+              Años Trabajando <span class="required">*</span>
+            </label>
+            <input
+              type="number"
+              class="field-input"
+              formControlName="workingYears"
+              placeholder="0"
+              min="0"
+              step="0.1">
+          </div>
+        </div>
+      }
+
+      <!-- mensaje info -->
+      @if (clientForm.get('isWorking')?.value === 'false') {
+        <div class="info-box">
+          <mat-icon class="info-icon">info</mat-icon>
+          <p class="info-text">
+            Al no estar trabajando, los campos de información laboral no son necesarios.
+          </p>
+        </div>
+      }
+    </div>
+
+    <div class="form-divider"></div>
+
+    <!-- seccion contacto-->
+    <div class="form-section">
+      <h3 class="section-title">Información de Contacto</h3>
+
+      <!-- mail -->
+      <div class="form-field full-width">
+        <label class="field-label">
+          Email <span class="required">*</span>
+        </label>
+        <input
+          type="email"
+          class="field-input"
+          formControlName="email"
+          placeholder="string@gpt.com">
+        @if (isFieldInvalid('email')) {
+          <span class="error-text">
+            @if (clientForm.get('email')?.hasError('required')) {
+              El email es requerido
+            }
+            @if (clientForm.get('email')?.hasError('email')) {
+              Ingresa un email válido
+            }
+          </span>
+        }
+      </div>
+
+      <!-- ✨ Checkbox simplificado -->
+      <div class="special-group-box" [class.disabled-box]="!canBeIntegrator()">
+        <label class="checkbox-wrapper" [class.disabled-label]="!canBeIntegrator()">
+          <input
+            type="checkbox"
+            class="checkbox-input"
+            formControlName="isIntegrator"
+            [disabled]="!canBeIntegrator()">
+          <span class="checkbox-simple-text">
+            ¿Eres una persona con discapacidad, desplazada o migrante retornado?
+          </span>
+        </label>
+
+        @if (showIntegratorWarning()) {
+          <div class="warning-box">
+            <mat-icon class="warning-icon">warning</mat-icon>
+            <p class="warning-text">
+              Los ingresos superan el límite de S/{{ getMaxIncomeFormatted() }} para pertenecer a grupos especiales.
+            </p>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- botones -->
+    <div class="modal-actions">
+      <button
+        type="button"
+        class="btn-cancel"
+        (click)="onCancel()">
+        Cancelar
+      </button>
+
+      <button
+        type="submit"
+        class="btn-submit"
+        [disabled]="clientForm.invalid || isLoading()">
+        @if (isLoading()) {
+          Guardando...
+        } @else {
+          {{ data.mode === 'create' ? 'Crear Cliente' : 'Guardar Cambios' }}
+        }
+      </button>
+    </div>
+  </form>
+</div>
