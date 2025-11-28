@@ -1,0 +1,124 @@
+<div class="housings-page">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-text">
+      <h1 class="page-title">Gestión de Ofertas Inmobiliarias</h1>
+      <p class="page-subtitle">
+        Administra las propiedades disponibles para simulación de créditos.
+      </p>
+    </div>
+  </div>
+
+  <!-- Barra de búsqueda y botón -->
+  <div class="actions-bar">
+    <div class="search-box">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input
+        type="text"
+        class="search-input"
+        [(ngModel)]="searchTerm"
+        placeholder="Buscar por nombre, distrito o provincia...">
+    </div>
+
+    <button
+      class="btn-new-housing"
+      (click)="openNewHousingModal()">
+      <mat-icon>add</mat-icon>
+      Nueva Oferta
+    </button>
+  </div>
+
+  <!-- Grid de Cards -->
+  <div class="housings-container">
+    @if (isLoading()) {
+      <div class="loading-state">
+        <p>Cargando ofertas...</p>
+      </div>
+    } @else if (filteredHousings().length === 0) {
+      <div class="empty-state">
+        <mat-icon>apartment</mat-icon>
+        <p>No se encontraron ofertas</p>
+        <button class="btn-empty-action" (click)="openNewHousingModal()">
+          <mat-icon>add</mat-icon>
+          Agregar primera oferta
+        </button>
+      </div>
+    } @else {
+      <div class="housings-grid">
+        @for (housing of filteredHousings(); track housing.id) {
+          <div class="housing-card">
+            <!-- Header de la card con imagen y botones -->
+            <div class="card-header">
+              <mat-icon class="building-icon">apartment</mat-icon>
+
+              <div class="card-actions">
+                <button
+                  class="btn-icon btn-edit"
+                  (click)="openEditHousingModal(housing)"
+                  title="Editar oferta">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  class="btn-icon btn-delete"
+                  (click)="confirmDelete(housing)"
+                  title="Eliminar oferta">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <!-- Contenido de la card -->
+            <div class="card-content">
+              <h3 class="housing-title">{{ housing.title }}</h3>
+
+              <div class="location-info">
+                <mat-icon class="location-icon">place</mat-icon>
+                <div class="location-text">
+                  <p class="district-province">{{ housing.district }}, {{ getProvinceLabel(housing.province) }}</p>
+                  <p class="address">{{ housing.address }}</p>
+                  @if (housing.department) {
+                    <p class="department">Dpto. {{ housing.department }}</p>
+                  }
+                </div>
+              </div>
+
+              <div class="housing-details">
+                <div class="detail-item">
+                  <mat-icon>open_in_full</mat-icon>
+                  <span>{{ housing.area }} m²</span>
+                </div>
+                <div class="detail-item">
+                  <mat-icon>bed</mat-icon>
+                  <span>{{ housing.roomQuantity }} hab.</span>
+                </div>
+              </div>
+
+              <div class="card-divider"></div>
+
+              <div class="card-footer">
+                <div class="price-section">
+                  <span class="price">{{ housing.currencySymbol }}{{ formatAmount(housing.salePrice) }}</span>
+                  <button
+                    class="btn-currency-small"
+                    (click)="exchangeCurrency(housing)"
+                    [title]="'Cambiar a ' + (housing.currencySymbol === 'S/ ' ? 'Dólares' : 'Soles')">
+                    <mat-icon>sync_alt</mat-icon>
+                  </button>
+                </div>
+
+                <div class="tags">
+                  <span class="tag" [class]="getStateClass(housing.housingState)">
+                    {{ getStateLabel(housing.housingState) }}
+                  </span>
+                  <span class="tag" [class]="getCategoryClass(housing.housingCategory)">
+                    {{ getCategoryLabel(housing.housingCategory) }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
