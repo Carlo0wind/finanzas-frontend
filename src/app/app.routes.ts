@@ -7,6 +7,13 @@ import {Dashboard} from './presentation/pages/dashboard/dashboard';
 import {ProfileEdit} from './presentation/pages/auth/profile-edit/profile-edit';
 import {ClientManagement} from './presentation/pages/client-management/client-management';
 import {Housing} from './presentation/pages/housing/housing';
+import {FinanceEntities} from './presentation/pages/finance-entities/finance-entities';
+import {
+  CreditSimulationManagement
+} from './presentation/pages/creditSimulation/credit-simulation-management/credit-simulation-management';
+import {
+  CreditSimulationProfile
+} from './presentation/pages/creditSimulation/credit-simulation-profile/credit-simulation-profile';
 
 export const routes: Routes = [
   //RUTAS PUBLICAS
@@ -26,9 +33,18 @@ export const routes: Routes = [
       {path: 'dashboard', component: Dashboard},
       {path: 'clientes', component: ClientManagement},
       {path: 'ofertas', component: Housing},
-      {path: 'entidades-financieras', component: Dashboard},
-      {path: 'simulador', component: Dashboard},
-      {path: 'profile/edit', component: ProfileEdit}
+      {path: 'entidades-financieras', component: FinanceEntities},
+      {path: 'profile/edit', component: ProfileEdit},
+      {
+        path: 'simulador',
+        children: [
+          { path: '', redirectTo: 'gestion', pathMatch: 'full' },
+          { path: 'gestion', component: CreditSimulationManagement },     // Lista
+          { path: 'nueva', component: CreditSimulationProfile },             // Formulario paso a paso
+          { path: 'perfil/:id', component: CreditSimulationProfile },     // Ver detalle + cronograma
+          { path: 'editar/:id', component: CreditSimulationProfile }         // Editar simulación (opcional)
+        ]
+      }
     ]
   }
 ];

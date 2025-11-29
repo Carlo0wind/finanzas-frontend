@@ -1,0 +1,66 @@
+/*.simulations-page {*/
+/*  padding: 40px;*/
+/*  max-width: 1520px;*/
+/*  margin: 0 auto;*/
+/*  animation: fadeIn 0.4s ease-in-out;*/
+/*}*/
+
+/*@keyframes fadeIn {*/
+/*  from { opacity: 0; transform: translateY(20px); }*/
+/*  to   { opacity: 1; transform: translateY(0); }*/
+/*}*/
+
+/*.page-header, .actions-bar, .search-box, .search-input,*/
+/*.btn-new-simulation, .table-container, .clients-table {*/
+/*  !* Reutilizamos exactamente los mismos estilos de client-management *!*/
+/*  @extend .clients-page *; // Si usas SCSS con @extend*/
+/*}*/
+
+/*!* O pega todo el CSS de client-management aquí y solo cambia: *!*/
+/*.btn-new-simulation {*/
+/*  background: #7c3aed; !* morado más financiero *!*/
+/*}*/
+
+/*.btn-new-simulation:hover {*/
+/*  background: #8b5cf6;*/
+/*}*/
+
+/*.status-badge.approved {*/
+/*  background: #e8f5e9;*/
+/*  color: #2e7d32;*/
+/*}*/
+
+/*.status-badge.rejected {*/
+/*  background: #ffebee;*/
+/*  color: #c62828;*/
+/*}*/
+
+/*.row-clickable {*/
+/*  cursor: pointer;*/
+/*  transition: background 0.2s;*/
+/*}*/
+
+/*.row-clickable:hover {*/
+/*  background: #f8f9fa;*/
+/*}*/
+
+/*.cell-amount {*/
+/*  font-weight: 600;*/
+/*  color: #1a1a1a;*/
+/*}*/
+
+/*.cell-rate {*/
+/*  font-weight: 600;*/
+/*  color: #7c3aed;*/
+/*}*/
+
+/*.positive { color: #2e7d32; font-weight: 600; }*/
+/*.negative { color: #c62828; font-weight: 600; }*/
+
+/*.btn-view {*/
+/*  color: #565D6D;*/
+/*}*/
+
+/*.btn-view:hover {*/
+/*  background: rgba(86, 93, 109, 0.08);*/
+/*}*/

@@ -1,1 +1,19 @@
-<p>finance-entities works!</p>
+<div class="page">
+  <h1 class="title">Entidades Financieras Autorizadas</h1>
+  <p class="subtitle">Explora las entidades disponibles para Crédito MiVivienda</p>
+
+  @if (isLoading()) {
+    <p>Cargando entidades...</p>
+  } @else {
+    @for (group of groupedEntities(); track group.type) {
+      <section class="group">
+        <h2 class="group-title">{{ group.label }}</h2>
+        <div class="cards-grid">
+          @for (entity of group.entities; track entity.id) {
+            <app-finance-entity-card-component [entity]="entity" />
+          }
+        </div>
+      </section>
+    }
+  }
+</div>

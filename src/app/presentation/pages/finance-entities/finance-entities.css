@@ -1,0 +1,47 @@
+.page {
+  padding: 40px;
+  max-width: 1440px;
+  margin: 0 auto;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.title {
+  font-family: 'Inter', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 40px;
+  color: #111827;
+  margin: 0 0 8px 0;
+}
+
+.subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  margin: 0 0 3rem 0;
+  color: #34363d;
+}
+
+.group-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  margin: 50px 0 30px;
+  padding-bottom: 10px;
+  border-bottom: 1.5px solid #e9d5ff;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 28px;
+  margin-bottom: 60px;
+}
+
+.loading {
+  text-align: center;
+  padding: 60px;
+  font-size: 18px;
+  color: #666;
+}

@@ -31,7 +31,7 @@ export class Navbar {
     { label: 'Clientes', route: 'clientes' },
     { label: 'Ofertas', route: 'ofertas' },
     { label: 'Entidades Financieras', route: 'entidades-financieras' },
-    { label: 'Simulador', route: 'simulador' }
+    { label: 'Simulador', route: 'simulador/gestion' }
   ];
 
   // signals eran esto, gracias claudesito
