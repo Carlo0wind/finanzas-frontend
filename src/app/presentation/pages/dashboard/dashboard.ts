@@ -49,7 +49,7 @@ export class Dashboard {
       description: 'Crea simulaciones de crédito personalizadas con diferentes entidades financieras y parámetros.',
       icon: 'calculate',
       iconBg: '#1DD75BFF',
-      route: '/private/simulador',
+      route: '/private/simulador/gestion',
       linkText: 'Comenzar'
     }
   ]
