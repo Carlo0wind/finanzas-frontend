@@ -1,102 +1,120 @@
-<!--<div class="simulations-page">-->
-<!--  &lt;!&ndash; Header &ndash;&gt;-->
-<!--  <div class="page-header">-->
-<!--    <div class="header-text">-->
-<!--      <h1 class="page-title">Gestión de Solicitudes de Simulación</h1>-->
-<!--      <p class="page-subtitle">-->
-<!--        Administra todas las simulaciones de crédito hipotecario realizadas para tus clientes.-->
-<!--      </p>-->
-<!--    </div>-->
-<!--  </div>-->
+<div class="simulations-page">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-text">
+      <h1 class="page-title">Gestión de Solicitudes de Simulación</h1>
+      <p class="page-subtitle">
+        Administra la información de tus clientes y sus perfiles financieros.
+      </p>
+    </div>
+  </div>
 
-<!--  &lt;!&ndash; Barra de búsqueda + botón nuevo &ndash;&gt;-->
-<!--  <div class="actions-bar">-->
-<!--    <div class="search-box">-->
-<!--      <mat-icon class="search-icon">search</mat-icon>-->
-<!--      <input-->
-<!--        type="text"-->
-<!--        class="search-input"-->
-<!--        [(ngModel)]="searchTerm"-->
-<!--        placeholder="Buscar por cliente, DNI, banco o TCEA..."-->
-<!--        (input)="onSearch()">-->
-<!--    </div>-->
+  <!-- Barra de búsqueda y botón -->
+  <div class="actions-bar">
+    <div class="search-box">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input
+        type="text"
+        class="search-input"
+        [(ngModel)]="searchTerm"
+        placeholder="Busca por cliente, banca, oferta o tipo de bono...">
+    </div>
 
-<!--    <button class="btn-new-simulation" (click)="newSimulation()">-->
-<!--      <mat-icon>add</mat-icon>-->
-<!--      Nueva Simulación-->
-<!--    </button>-->
-<!--  </div>-->
+    <button
+      class="btn-new-simulation"
+      (click)="openNewSimulation()">
+      <mat-icon>add</mat-icon>
+      Nueva Solicitud
+    </button>
+  </div>
 
-<!--  &lt;!&ndash; Tabla de Simulaciones &ndash;&gt;-->
-<!--  <div class="table-container">-->
-<!--    @if (isLoading()) {-->
-<!--      <div class="loading-state">-->
-<!--        <p>Cargando simulaciones...</p>-->
-<!--      </div>-->
-<!--    } @else if (filteredSimulations().length === 0) {-->
-<!--      <div class="empty-state">-->
-<!--        <mat-icon>calculate</mat-icon>-->
-<!--        <p>Aún no hay simulaciones realizadas</p>-->
-<!--        <button class="btn-empty-action" (click)="newSimulation()">-->
-<!--          <mat-icon>add</mat-icon>-->
-<!--          Realizar la primera simulación-->
-<!--        </button>-->
-<!--      </div>-->
-<!--    } @else {-->
-<!--      <table class="simulations-table">-->
-<!--        <thead>-->
-<!--        <tr>-->
-<!--          <th>CLIENTE</th>-->
-<!--          <th>DNI</th>-->
-<!--          <th>BANCO</th>-->
-<!--          <th>ESTADO</th>-->
-<!--          <th>CUOTA MENSUAL</th>-->
-<!--          <th>TCEA</th>-->
-<!--          <th>VAN</th>-->
-<!--          <th>FECHA</th>-->
-<!--          <th>ACCIONES</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--          @for (sim of filteredSimulations(); track sim.id) {-->
-<!--            <tr (click)="viewSimulation(sim.id)" class="row-clickable">-->
-<!--              <td class="cell-name">-->
-<!--                {{ sim.clientFirstname }} {{ sim.clientLastname }}-->
-<!--              </td>-->
-<!--              <td>{{ sim.clientDni }}</td>-->
-<!--              <td>-->
-<!--                <strong>{{ sim.financeEntityName }}</strong>-->
-<!--              </td>-->
-<!--              <td>-->
-<!--                <span-->
-<!--                  class="status-badge"-->
-<!--                  [class.approved]="sim.financeEntityApproved"-->
-<!--                  [class.rejected]="!sim.financeEntityApproved">-->
-<!--                  {{ sim.financeEntityApproved ? 'Aprobado' : 'Rechazado' }}-->
-<!--                </span>-->
-<!--              </td>-->
-<!--              <td class="cell-amount">-->
-<!--                S/ {{ formatAmount(sim.monthlyFee) }}-->
-<!--              </td>-->
-<!--              <td class="cell-rate">-->
-<!--                {{ sim.rentIndicators.tcea | number:'1.2-2' }}%-->
-<!--              </td>-->
-<!--              <td [class.positive]="sim.rentIndicators.van > 0" [class.negative]="sim.rentIndicators.van <= 0">-->
-<!--                S/ {{ formatAmount(sim.rentIndicators.van) }}-->
-<!--              </td>-->
-<!--              <td>{{ sim.startDate | date:'dd/MM/yyyy' }}</td>-->
-<!--              <td class="cell-actions" (click)="$event.stopPropagation()">-->
-<!--                <button class="btn-icon btn-view" title="Ver detalles" (click)="viewSimulation(sim.id)">-->
-<!--                  <mat-icon>visibility</mat-icon>-->
-<!--                </button>-->
-<!--                <button class="btn-icon btn-delete" title="Eliminar simulación" (click)="confirmDelete(sim)">-->
-<!--                  <mat-icon>delete</mat-icon>-->
-<!--                </button>-->
-<!--              </td>-->
-<!--            </tr>-->
-<!--          }-->
-<!--        </tbody>-->
-<!--      </table>-->
-<!--    }-->
-<!--  </div>-->
-<!--</div>-->
+  <!-- Tabla de Simulaciones -->
+  <div class="table-container">
+    @if (isLoading()) {
+      <div class="loading-state">
+        <mat-icon class="loading-icon">hourglass_empty</mat-icon>
+        <p>Cargando simulaciones...</p>
+      </div>
+    } @else if (filteredSimulations().length === 0) {
+      <div class="empty-state">
+        <mat-icon>calculate</mat-icon>
+        <p>No se encontraron simulaciones</p>
+        <button class="btn-empty-action" (click)="openNewSimulation()">
+          <mat-icon>add</mat-icon>
+          Crear primera simulación
+        </button>
+      </div>
+    } @else {
+      <table class="simulations-table">
+        <thead>
+        <tr>
+          <th>CLIENTE</th>
+          <th>OFERTA</th>
+          <th>BANCA</th>
+          <th>TIPO DE BONO</th>
+          <th>ESTADO</th>
+          <th class="text-center">ACCIONES</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (simulation of filteredSimulations(); track simulation.id) {
+            <tr>
+              <td class="cell-client">
+                <div class="client-info">
+                  <mat-icon class="cell-icon">person</mat-icon>
+                  <span>{{ simulation.clientName }}</span>
+                </div>
+              </td>
+              <td class="cell-housing">
+                <div class="housing-info">
+                  <mat-icon class="cell-icon">home</mat-icon>
+                  <span>{{ simulation.housingTitle }}</span>
+                </div>
+              </td>
+              <td class="cell-bank">
+                <div class="bank-info">
+                  <mat-icon class="cell-icon">account_balance</mat-icon>
+                  <span>{{ simulation.financeEntityName }}</span>
+                </div>
+              </td>
+              <td class="cell-bonus">
+                <span
+                  class="bonus-badge"
+                  [class]="getBonusBadgeClass(simulation.bonusTypeLabel!)">
+                  {{ simulation.bonusTypeLabel }}
+                </span>
+              </td>
+              <td>
+                <span
+                  class="status-badge"
+                  [class]="getApprovalClass(simulation)">
+                  {{ getApprovalStatus(simulation) }}
+                </span>
+              </td>
+              <td class="cell-actions">
+                <button
+                  class="btn-icon btn-edit"
+                  (click)="editSimulation(simulation.id)"
+                  title="Editar simulación">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  class="btn-icon btn-view"
+                  (click)="viewSimulationDetails(simulation.id)"
+                  title="Ver detalles">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+                <button
+                  class="btn-icon btn-delete"
+                  (click)="confirmDelete(simulation)"
+                  title="Eliminar simulación">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+</div>

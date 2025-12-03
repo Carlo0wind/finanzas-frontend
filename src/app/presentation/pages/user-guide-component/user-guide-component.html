@@ -1,0 +1,86 @@
+<div class="user-guide">
+  <!-- Header -->
+  <div class="guide-header">
+    <button class="btn-back" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      <span>Volver al Panel</span>
+    </button>
+    <div class="header-content">
+      <h1 class="guide-title">
+        <mat-icon>menu_book</mat-icon>
+        Manual de Usuario
+      </h1>
+      <p class="guide-subtitle">
+        Aprende a usar Hominy y comprende los conceptos financieros del Crédito MiVivienda
+      </p>
+    </div>
+  </div>
+
+  <div class="guide-container">
+    <!-- Sidebar -->
+    <aside class="guide-sidebar">
+      <nav class="guide-nav">
+        @for (section of sections; track section.id) {
+          <button
+            class="nav-item"
+            [class.active]="activeSection() === section.id"
+            (click)="setActiveSection(section.id)">
+            <div class="nav-icon" [style.background]="section.iconBg">
+              <mat-icon>{{ section.icon }}</mat-icon>
+            </div>
+            <span>{{ section.title }}</span>
+          </button>
+        }
+      </nav>
+    </aside>
+
+    <!-- Content -->
+    <main class="guide-content">
+      @if (getActiveSection(); as section) {
+        <div class="section-header">
+          <div class="section-icon" [style.background]="section.iconBg">
+            <mat-icon>{{ section.icon }}</mat-icon>
+          </div>
+          <h2 class="section-title">{{ section.title }}</h2>
+        </div>
+
+        <div class="subsections">
+          @for (subsection of section.subsections; track subsection.id) {
+            <article class="subsection" [id]="subsection.id">
+              <h3 class="subsection-title">{{ subsection.title }}</h3>
+              <div class="subsection-content">
+                <p [innerHTML]="subsection.content"></p>
+
+                @if (subsection.formula) {
+                  <div class="formula-box">
+                    <div class="formula-header">
+                      <mat-icon>functions</mat-icon>
+                      <span>Fórmula</span>
+                    </div>
+                    <pre class="formula-content">{{ subsection.formula }}</pre>
+                  </div>
+                }
+
+                @if (subsection.example) {
+                  <div class="example-box">
+                    <div class="example-header">
+                      <mat-icon>lightbulb</mat-icon>
+                      <span>Ejemplo</span>
+                    </div>
+                    <pre class="example-content">{{ subsection.example }}</pre>
+                  </div>
+                }
+
+                @if (subsection.image) {
+                  <div class="image-box">
+                    <img [src]="subsection.image" [alt]="subsection.title">
+                  </div>
+                }
+              </div>
+            </article>
+          }
+        </div>
+      }
+    </main>
+  </div>
+</div>

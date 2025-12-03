@@ -1,7 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {FinanceEntity} from '../model/financeEntity.model';
+import {EvaluateFinanceEntityRequest, EvaluateFinanceEntityResponse, FinanceEntity} from '../model/financeEntity.model';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import {FinanceEntity} from '../model/financeEntity.model';
 export class FinanceEntityService {
   private httpClient: HttpClient = inject(HttpClient);
   constructor() {}
-  private apiUrl = '/api/v1/finance-entities';
+  private apiUrl = `${environment.apiUrl}/finance-entities`;
 
   getAllFinanceEntities(): Observable<FinanceEntity[]> {
     return this.httpClient.get<FinanceEntity[]>(this.apiUrl);
@@ -21,9 +22,9 @@ export class FinanceEntityService {
 
   evaluateFinanceEntity(
     id: number,
-    data: any
-  ): Observable<{ accepted: boolean; reason: string }> {
-    return this.httpClient.post<{ accepted: boolean; reason: string }>(
+    data: EvaluateFinanceEntityRequest
+  ): Observable<EvaluateFinanceEntityResponse> {
+    return this.httpClient.post<EvaluateFinanceEntityResponse>(
       `${this.apiUrl}/${id}/evaluate`,
       data
     );

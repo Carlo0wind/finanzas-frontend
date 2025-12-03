@@ -5,6 +5,10 @@ import {Router} from '@angular/router';
 import {
   FinanceEntityCardComponent
 } from '../../shared/components/finance-entity-card-component/finance-entity-card-component';
+import {MatDialog} from '@angular/material/dialog';
+import {
+  FinanceEntityModalDetails
+} from '../../shared/components/finance-entity-modal-details/finance-entity-modal-details';
 
 @Component({
   selector: 'app-finance-entities',
@@ -40,7 +44,8 @@ export class FinanceEntities {
 
   constructor(
     private financeEntityService: FinanceEntityService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {
     this.loadEntities();
   }
@@ -52,6 +57,22 @@ export class FinanceEntities {
         this.isLoading.set(false);
       },
       error: () => this.isLoading.set(false)
+    });
+  }
+
+  openEntityDetails(entityId: number): void {
+    const entity = this.allEntities().find(e => e.id === entityId);
+    if (!entity) return;
+
+    this.dialog.open(FinanceEntityModalDetails, {
+      width: '900px',
+      maxWidth: '95vw',
+      maxHeight: '90vh',
+      data: {
+        entity: entity,
+        selectable: false
+      },
+      panelClass: 'finance-entity-modal'
     });
   }
 }

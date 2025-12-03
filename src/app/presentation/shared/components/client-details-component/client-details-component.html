@@ -1,1 +1,119 @@
-<p>client-details-component works!</p>
+<div class="modal-container">
+  <div class="modal-header">
+    <h2 class="modal-title">Detalles del Cliente</h2>
+    <button mat-icon-button class="close-button" (click)="onClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Cargando información...</p>
+    </div>
+  }
+
+  @else if (error()) {
+    <div class="error-container">
+      <mat-icon class="error-icon">error_outline</mat-icon>
+      <p>No se pudo cargar la información del cliente.</p>
+      <button class="btn-cancel" (click)="onClose()">Cerrar</button>
+    </div>
+  }
+
+  @else if (client(); as c) {
+    <div class="modal-content">
+
+      <div class="detail-section">
+        <h3 class="section-title">Información Personal</h3>
+
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="detail-label">Nombre Completo</span>
+            <span class="detail-value highlight">{{ c.firstname }} {{ c.lastname }}</span>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-label">DNI</span>
+            <span class="detail-value">{{ c.dni }}</span>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-label">Edad</span>
+            <span class="detail-value">{{ c.age }} años</span>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-label">Dependientes</span>
+            <span class="detail-value">{{ c.dependentsNumber }} personas</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <div class="detail-section">
+        <h3 class="section-title">Situación Laboral y Financiera</h3>
+
+        <div class="status-box" [class.is-working]="c.isWorking" [class.not-working]="!c.isWorking">
+          <mat-icon>{{ c.isWorking ? 'work' : 'work_off' }}</mat-icon>
+          <span>{{ getStatusLabel(c.isWorking) }}</span>
+        </div>
+
+        @if (c.isWorking) {
+          <div class="detail-grid mt-4">
+            <div class="detail-item">
+              <span class="detail-label">Ingresos Mensuales</span>
+              <span class="detail-value salary">
+                {{ formatCurrency(c.monthlyIncome, c.currencySymbol) }}
+              </span>
+            </div>
+
+            <div class="detail-item">
+              <span class="detail-label">Tipo de Empleo</span>
+              <span class="detail-value">{{ getEmploymentType(c.isDependent) }}</span>
+            </div>
+
+            <div class="detail-item">
+              <span class="detail-label">Años Trabajando</span>
+              <span class="detail-value">{{ c.workingYears }} años</span>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="form-divider"></div>
+
+      <div class="detail-section">
+        <h3 class="section-title">Información de Contacto y Perfil</h3>
+
+        <div class="detail-grid">
+          <div class="detail-item full-width">
+            <span class="detail-label">Email</span>
+            <div class="email-container">
+              <mat-icon>email</mat-icon>
+              <span class="detail-value">{{ c.email }}</span>
+            </div>
+          </div>
+
+<!--          <div class="detail-item">-->
+<!--            <span class="detail-label">ID Inmobiliaria</span>-->
+<!--            <span class="detail-value code-value">#{{ c.realStateCompanyId }}</span>-->
+<!--          </div>-->
+
+          <div class="detail-item">
+            <span class="detail-label">¿Eres una persona con discapacidad, desplazada o migrante retornado?</span>
+            <span class="badge" [class.yes]="c.isIntegrator" [class.no]="!c.isIntegrator">
+              {{ c.isIntegrator ? 'Sí' : 'No' }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="onClose()">Cerrar</button>
+    </div>
+  }
+</div>

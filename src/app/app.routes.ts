@@ -14,6 +14,10 @@ import {
 import {
   CreditSimulationProfile
 } from './presentation/pages/creditSimulation/credit-simulation-profile/credit-simulation-profile';
+import {
+  CreditSimulationProfileDetails
+} from './presentation/pages/creditSimulation/credit-simulation-profile-details/credit-simulation-profile-details';
+import {UserGuideComponent} from './presentation/pages/user-guide-component/user-guide-component';
 
 export const routes: Routes = [
   //RUTAS PUBLICAS
@@ -31,20 +35,15 @@ export const routes: Routes = [
     path: 'private',  component: PrivateLayoutComponent,
     children: [
       {path: 'dashboard', component: Dashboard},
+      { path: 'guia-usuario', component: UserGuideComponent },
       {path: 'clientes', component: ClientManagement},
       {path: 'ofertas', component: Housing},
       {path: 'entidades-financieras', component: FinanceEntities},
       {path: 'profile/edit', component: ProfileEdit},
-      {
-        path: 'simulador',
-        children: [
-          { path: '', redirectTo: 'gestion', pathMatch: 'full' },
-          { path: 'gestion', component: CreditSimulationManagement },     // Lista
-          { path: 'nueva', component: CreditSimulationProfile },             // Formulario paso a paso
-          { path: 'perfil/:id', component: CreditSimulationProfile },     // Ver detalle + cronograma
-          { path: 'editar/:id', component: CreditSimulationProfile }         // Editar simulación (opcional)
-        ]
-      }
+      { path: 'credit-simulation', component: CreditSimulationManagement },
+      { path: 'credit-simulation/new', component: CreditSimulationProfile },
+      { path: 'credit-simulation/edit/:id', component: CreditSimulationProfile },
+      { path: 'credit-simulation/details/:id', component: CreditSimulationProfileDetails }
     ]
   }
 ];

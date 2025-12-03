@@ -6,6 +6,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {ClientManagamentService} from '../../../services/client-managament-service';
 import {ClientResponse, CreateClientRequest, UpdateClientRequest} from '../../../model/clientManagement.model';
 import {ClientModalComponent} from '../../shared/components/client-modal-component/client-modal-component';
+import {ClientDetailsComponent} from '../../shared/components/client-details-component/client-details-component';
 
 @Component({
   selector: 'app-client-management',
@@ -102,6 +103,13 @@ export class ClientManagement implements OnInit{
     });
   }
 
+  openClientDetails(clientId: number): void {
+    this.dialog.open(ClientDetailsComponent, {
+      width: '650px',
+      maxWidth: '90vw',
+      data: { clientId: clientId } 
+    });
+  }
   createClient(clientData: any): void {
     const companyId = localStorage.getItem('companyId');
     if (!companyId) return;

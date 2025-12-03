@@ -1,0 +1,198 @@
+<div class="modal-container">
+  <!-- Header -->
+  <div class="modal-header">
+    <div class="header-content">
+      <img [src]="logoUrl()" [alt]="entity.name" class="entity-logo" />
+      <div class="header-text">
+        <h2 class="entity-name">{{ entity.name }}</h2>
+        <p class="entity-type">{{ typeLabel() }}</p>
+      </div>
+    </div>
+    <button class="btn-close" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Content -->
+  <div class="modal-content">
+    <!-- Sección: Precio de Vivienda -->
+    <section class="info-section">
+      <h3 class="section-title">
+        <mat-icon>home</mat-icon>
+        Precio de Vivienda
+      </h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Precio Mínimo:</span>
+          <span class="info-value">{{ formatCurrency(entity.minimumHousingPrice) }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Precio Máximo:</span>
+          <span class="info-value">{{ formatCurrency(entity.maximumHousingPrice) }}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Financiamiento -->
+    <section class="info-section">
+      <h3 class="section-title">
+        <mat-icon>account_balance_wallet</mat-icon>
+        Financiamiento
+      </h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Monto Mínimo:</span>
+          <span class="info-value">{{ formatCurrency(entity.minimumFinance) }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Monto Máximo:</span>
+          <span class="info-value">
+            @if (entity.maximumFinance !== null && entity.maximumFinance !== undefined) {
+              @if (entity.maximumFinance > 1) {
+                {{ formatCurrency(entity.maximumFinance) }}
+              } @else {
+                {{ formatPercentage(entity.maximumFinance * 100) }} del valor de la vivienda
+              }
+            } @else {
+              No especificado
+            }
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Cuota Inicial -->
+    <section class="info-section">
+      <h3 class="section-title">
+        <mat-icon>savings</mat-icon>
+        Cuota Inicial
+      </h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Porcentaje Mínimo:</span>
+          <span class="info-value">{{ formatPercentage(entity.minimumDownPaymentPercentage) }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Porcentaje Máximo:</span>
+          <span class="info-value">{{ formatPercentage(entity.maximumDownPaymentPercentage) }}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Plazo -->
+    <section class="info-section">
+      <h3 class="section-title">
+        <mat-icon>schedule</mat-icon>
+        Plazo de Pago
+      </h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Plazo Mínimo:</span>
+          <span class="info-value">{{ formatMonths(entity.minimumMonthPaymentTerm) }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Plazo Máximo:</span>
+          <span class="info-value">{{ formatMonths(entity.maximumMonthPaymentTerm) }}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Requisitos del Cliente -->
+    <section class="info-section">
+      <h3 class="section-title">
+        <mat-icon>person</mat-icon>
+        Requisitos del Cliente
+      </h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Salario Mínimo:</span>
+          <span class="info-value">{{ formatCurrency(entity.minimumSalary) }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Requiere Historial Crediticio:</span>
+          <span class="info-value" [class.required]="entity.requiresCreditHistory">
+            {{ formatYesNo(entity.requiresCreditHistory) }}
+          </span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Años Mínimos (Dependiente):</span>
+          <span class="info-value">
+            @if (entity.minYearsDependentEmploymentTenure !== null && entity.minYearsDependentEmploymentTenure !== undefined) {
+              {{ entity.minYearsDependentEmploymentTenure }} {{ entity.minYearsDependentEmploymentTenure === 1 ? 'año' : 'años' }}
+            } @else {
+              No especificado
+            }
+          </span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Años Mínimos (Independiente):</span>
+          <span class="info-value">
+            @if (entity.minYearsIndependentEmploymentTenure !== null && entity.minYearsIndependentEmploymentTenure !== undefined) {
+              {{ entity.minYearsIndependentEmploymentTenure }} {{ entity.minYearsIndependentEmploymentTenure === 1 ? 'año' : 'años' }}
+            } @else {
+              No especificado
+            }
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Condiciones Especiales -->
+    <section class="info-section">
+      <h3 class="section-title">
+        <mat-icon>star</mat-icon>
+        Condiciones Especiales
+      </h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Acepta Vivienda Usada:</span>
+          <span class="info-value"
+                [class.yes]="entity.allowsUsedHousing === true"
+                [class.no]="entity.allowsUsedHousing === false">
+            {{ formatYesNo(entity.allowsUsedHousing) }}
+          </span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Permite Otro Financiamiento:</span>
+          <span class="info-value"
+                [class.yes]="entity.allowsAnotherHousingFinancing === true"
+                [class.no]="entity.allowsAnotherHousingFinancing === false">
+            {{ formatYesNo(entity.allowsAnotherHousingFinancing) }}
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Período de Gracia -->
+    <section class="info-section">
+      <h3 class="section-title">
+        <mat-icon>pause_circle</mat-icon>
+        Período de Gracia
+      </h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Gracia Máxima (En Proyecto):</span>
+          <span class="info-value">{{ formatMonths(entity.inProjectMaxGracePeriodMonths) }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Gracia Máxima (General):</span>
+          <span class="info-value">{{ formatMonths(entity.generalMaxGracePeriodMonths) }}</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <div class="modal-footer">
+    <button class="btn-secondary" (click)="close()">
+      <mat-icon>close</mat-icon>
+      Cerrar
+    </button>
+    @if (selectable) {
+      <button class="btn-primary" (click)="selectEntity()">
+        <mat-icon>check_circle</mat-icon>
+        Seleccionar esta Entidad
+      </button>
+    }
+  </div>
+</div>

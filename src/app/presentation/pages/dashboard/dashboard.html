@@ -1,19 +1,68 @@
 <div class="dashboard">
-  <h1 class="dashboard-title">Panel de Control</h1>
-  <p class="dashboard-subtitle">
-    Bienvenido al sistema de simulación de créditos. Selecciona una acción para comenzar.
-  </p>
-
-  <div class="cards-grid">
-    @for (card of cards; track card.title) {
-      <app-dashboard-card
-        [title]="card.title"
-        [description]="card.description"
-        [icon]="card.icon"
-        [iconBg]="card.iconBg"
-        [route]="card.route"
-        [linkText]="card.linkText">
-      </app-dashboard-card>
-    }
+  <!-- Header -->
+  <div class="dashboard-header">
+    <div class="header-content">
+      <h1 class="dashboard-title">Panel de Control</h1>
+      <p class="dashboard-subtitle">
+        Bienvenido al sistema de simulación de créditos. Selecciona una acción para comenzar.
+      </p>
+    </div>
+    <button class="btn-guide" (click)="navigateToGuide()">
+      <mat-icon>help_outline</mat-icon>
+      <span>Manual de Usuario</span>
+    </button>
   </div>
+
+  <!-- Estadísticas -->
+  <section class="stats-section">
+    <h2 class="section-title">
+      Estadísticas Generales
+    </h2>
+
+    @if (isLoadingStats()) {
+      <div class="stats-loading">
+        <div class="spinner"></div>
+        <p>Cargando estadísticas...</p>
+      </div>
+    } @else {
+      <div class="stats-grid">
+        @for (stat of stats(); track stat.title) {
+          <div class="stat-card">
+            <div class="stat-icon" [style.background]="stat.iconBg">
+              <mat-icon>{{ stat.icon }}</mat-icon>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-title">{{ stat.title }}</h3>
+              <p class="stat-value">{{ stat.value }}</p>
+              @if (stat.trend) {
+                <div class="stat-trend" [class.trend-up]="stat.trendUp" [class.trend-down]="!stat.trendUp">
+                  <mat-icon>{{ stat.trendUp ? 'trending_up' : 'trending_down' }}</mat-icon>
+                  <span>{{ stat.trend }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </section>
+
+  <!-- Acciones Rápidas -->
+  <section class="actions-section">
+    <h2 class="section-title">
+            Acciones Rápidas
+    </h2>
+    <div class="cards-grid">
+      @for (card of cards; track card.title) {
+        <app-dashboard-card
+          [title]="card.title"
+          [description]="card.description"
+          [icon]="card.icon"
+          [iconBg]="card.iconBg"
+          [route]="card.route"
+          [linkText]="card.linkText">
+        </app-dashboard-card>
+      }
+    </div>
+  </section>
 </div>

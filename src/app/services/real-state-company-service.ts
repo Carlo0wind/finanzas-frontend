@@ -14,25 +14,25 @@ import {Observable} from 'rxjs';
   providedIn: 'root',
 })
 export class RealStateCompanyService {
-  //private baseUrl = `${environment.apiUrl}/real-state-company`;
+  private apiUrl = `${environment.apiUrl}/real-state-company`;
   private httpClient: HttpClient = inject(HttpClient);
   constructor() {}
   signUp(request: SignUpRequest): Observable<RealStateCompanyResponse> {
     return this.httpClient.post<RealStateCompanyResponse>(
-      '/api/v1/real-state-company/sign-up',
+      `${this.apiUrl}/sign-up`,
       request
     );
   }
   signIn(request: SignInRequest): Observable<AuthenticatedResponse> {
     return this.httpClient.post<AuthenticatedResponse>(
-      '/api/v1/real-state-company/sign-in',
+      `${this.apiUrl}/sign-in`,
       request
     );
   }
   //kkk funciona shrek
   getRealStateCompanyById(id: number): Observable<RealStateCompanyResponse> {
     return this.httpClient.get<RealStateCompanyResponse>(
-      `/api/v1/real-state-company/${id}`
+      `${this.apiUrl}/${id}`
     );
   }
   updateRealStateCompany(
@@ -40,7 +40,7 @@ export class RealStateCompanyService {
     request: UpdateRealStateCompanyRequest
   ): Observable<RealStateCompanyResponse> {
     return this.httpClient.put<RealStateCompanyResponse>(
-      `/api/v1/real-state-company/${id}`,
+      `${this.apiUrl}/${id}`,
       request
     );
   }
