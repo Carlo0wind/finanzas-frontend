@@ -279,6 +279,14 @@
   color: #D33131;
 }
 
+.btn-more{
+  color: black;
+}
+
+.btn-more:hover {
+  background: rgba(86, 93, 109, 0.08);
+}
+
 .btn-delete:hover {
   background: rgba(211, 49, 49, 0.08);
 }

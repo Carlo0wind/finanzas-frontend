@@ -54,6 +54,7 @@ export interface HousingResponse {
   salePrice: number;
   housingState: string;
   housingCategory: string;
+  currencyId: number;
   currencySymbol: string;
 }
 
@@ -138,3 +139,50 @@ export const HousingCategoryLabels: Record<HousingCategory, string> = {
   [HousingCategory.SOSTENIBLE]: 'Sostenible',
   [HousingCategory.TRADICIONAL]: 'Tradicional'
 };
+
+export class HousingHelper {
+  /**
+   * Formatea el precio de venta con símbolo de moneda
+   */
+  static formatSalePrice(housing: HousingResponse): string {
+    return `${housing.currencySymbol}${housing.salePrice.toLocaleString('es-PE', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })}`;
+  }
+
+  /**
+   * Obtiene el label de la provincia
+   */
+  static getProvinceLabel(province: string): string {
+    return ProvinceLabels[province as Province] || province;
+  }
+
+  /**
+   * Obtiene el label del estado
+   */
+  static getStateLabel(state: string): string {
+    return HousingStateLabels[state as HousingState] || state;
+  }
+
+  /**
+   * Obtiene el label de la categoría
+   */
+  static getCategoryLabel(category: string): string {
+    return HousingCategoryLabels[category as HousingCategory] || category;
+  }
+
+  /**
+   * Obtiene la dirección completa
+   */
+  static getFullAddress(housing: HousingResponse): string {
+    return `${housing.address}, ${housing.district}, ${housing.province}`;
+  }
+
+  /**
+   * Obtiene un resumen de la vivienda
+   */
+  static getSummary(housing: HousingResponse): string {
+    return `${housing.area}m² · ${housing.roomQuantity} hab. · ${this.getStateLabel(housing.housingState)}`;
+  }
+}

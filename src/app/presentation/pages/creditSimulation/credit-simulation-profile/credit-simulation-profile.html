@@ -1,1 +1,702 @@
-<p>credit-simulation-profile works!</p>
+<div class="simulation-container">
+  @if (isLoading()) {
+    <div class="loading-state">
+      <mat-icon>hourglass_empty</mat-icon>
+      <p>Cargando datos...</p>
+    </div>
+  } @else {
+    <!-- ==================== HEADER ==================== -->
+    <div class="page-header">
+      <h1 class="page-title">
+        {{ isEditMode() ? 'Editar' : 'Nueva' }} Simulación de Crédito Hipotecario
+      </h1>
+      <p class="page-subtitle">
+        Completa los siguientes pasos para {{ isEditMode() ? 'actualizar' : 'realizar' }} la simulación de crédito hipotecario.
+      </p>
+    </div>
+
+    <div class="content-wrapper">
+      <!-- ==================== MAIN CONTENT ==================== -->
+      <div class="main-content">
+
+        <!-- STEP 1: Selección de Cliente -->
+        <section class="form-section">
+          <div class="section-header">
+            <div class="section-number">1</div>
+            <div>
+              <h2 class="section-title">Selección de Cliente</h2>
+              <p class="section-subtitle">Elige el cliente que solicita el crédito</p>
+            </div>
+          </div>
+
+          <div class="client-selector">
+            <label class="form-label">Cliente</label>
+            <select
+              class="form-select"
+              [(ngModel)]="formData().clientId"
+              (change)="updateFormField('clientId', +$any($event.target).value)">
+              <option [value]="0">Seleccionar cliente...</option>
+              @for (client of clients(); track client.id) {
+                <option [value]="client.id">
+                  {{ client.firstname }} {{ client.lastname }} - {{ client.dni }}
+                </option>
+              }
+            </select>
+
+            @if (selectedClient()) {
+              <div class="client-info-card">
+                <div class="info-row">
+                  <span class="info-label">Edad:</span>
+                  <span class="info-value">{{ selectedClient()!.age }} años</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Ingresos Mensuales:</span>
+                  <span class="info-value">{{ formatCurrency(selectedClient()!.monthlyIncome) }}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Dependientes:</span>
+                  <span class="info-value">{{ selectedClient()!.dependentsNumber }}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Estado Laboral:</span>
+                  <span class="info-value">{{ selectedClient()!.isDependent ? 'Dependiente' : 'Independiente' }}</span>
+                </div>
+              </div>
+            }
+          </div>
+        </section>
+
+        <!-- STEP 2: Selección de Oferta -->
+        <section class="form-section">
+          <div class="section-header">
+            <div class="section-number">2</div>
+            <div>
+              <h2 class="section-title">Selección de Oferta</h2>
+              <p class="section-subtitle">Elige la vivienda</p>
+            </div>
+          </div>
+
+          <div class="search-box">
+            <mat-icon class="search-icon">search</mat-icon>
+            <input
+              type="text"
+              class="search-input"
+              [(ngModel)]="housingSearchTerm"
+              placeholder="Buscar por nombre, distrito o provincia...">
+          </div>
+
+          <div class="cards-grid">
+            @for (housing of paginatedHousings(); track housing.id) {
+              <div
+                class="housing-card"
+                [class.selected]="formData().housingId === housing.id"
+                (click)="selectHousing(housing.id)">
+
+                @if (formData().housingId === housing.id) {
+                  <div class="selected-badge">✓ Seleccionado</div>
+                }
+
+                <div class="card-icon">
+                  <mat-icon>apartment</mat-icon>
+                </div>
+                <h3 class="card-title">{{ housing.title }}</h3>
+                <p class="card-detail">
+                  <mat-icon>location_on</mat-icon>
+                  {{ housing.district }}, {{ housing.province }}
+                </p>
+                <p class="card-detail">
+                  <mat-icon>bed</mat-icon>
+                  {{ housing.roomQuantity }} habitaciones
+                </p>
+                <p class="card-detail">
+                  <mat-icon>open_in_full</mat-icon>
+                  {{ housing.area }} m²
+                </p>
+                <p class="card-price">{{ formatCurrency(housing.salePrice) }}</p>
+              </div>
+            }
+          </div>
+
+          @if (totalHousingPages() > 1) {
+            <div class="pagination">
+              <button
+                class="btn-pagination"
+                [disabled]="housingCurrentPage() === 0"
+                (click)="previousHousingPage()">
+                <mat-icon>chevron_left</mat-icon>
+              </button>
+              <span class="pagination-info">
+                Página {{ housingCurrentPage() + 1 }} de {{ totalHousingPages() }}
+              </span>
+              <button
+                class="btn-pagination"
+                [disabled]="housingCurrentPage() >= totalHousingPages() - 1"
+                (click)="nextHousingPage()">
+                <mat-icon>chevron_right</mat-icon>
+              </button>
+            </div>
+          }
+        </section>
+
+        <!-- STEP 3: Entidad Financiera -->
+        <section class="form-section">
+          <div class="section-header">
+            <div class="section-number">3</div>
+            <div>
+              <h2 class="section-title">Entidad Financiera</h2>
+              <p class="section-subtitle">Selecciona el banco o entidad financiera</p>
+            </div>
+          </div>
+
+          <div class="search-box">
+            <mat-icon class="search-icon">search</mat-icon>
+            <input
+              type="text"
+              class="search-input"
+              [(ngModel)]="financeSearchTerm"
+              placeholder="Buscar entidad financiera...">
+          </div>
+
+          @if (totalFinanceTypePages() > 1) {
+            <div class="pagination">
+              <button
+                class="btn-pagination"
+                [disabled]="financeCurrentTypeIndex() === 0"
+                (click)="previousFinanceTypePage()">
+                <mat-icon>chevron_left</mat-icon>
+              </button>
+              <span class="pagination-info">
+                Página {{ financeCurrentTypeIndex() + 1 }} de {{ totalFinanceTypePages() }}
+              </span>
+              <button
+                class="btn-pagination"
+                [disabled]="financeCurrentTypeIndex() >= totalFinanceTypePages() - 1"
+                (click)="nextFinanceTypePage()">
+                <mat-icon>chevron_right</mat-icon>
+              </button>
+            </div>
+          }
+
+          @if (currentFinanceGroup()) {
+            <div class="finance-group">
+              <h3 class="finance-group-title">{{ currentFinanceGroup()!.label }}</h3>
+              <div class="finance-cards-grid">
+                @for (entity of currentFinanceGroup()!.entities; track entity.id) {
+                  <app-finance-entity-card-component
+                    [entity]="entity"
+                    [selectable]="true"
+                    [isSelected]="formData().financialEntityId === entity.id"
+                    (onSelect)="selectFinanceEntity($event)"
+                    (onViewDetails)="openEntityDetails($event)" />
+                }
+              </div>
+            </div>
+          }
+          @else {
+            <div class="empty-state">
+              <mat-icon>search_off</mat-icon>
+              <p>No se encontraron entidades financieras</p>
+            </div>
+          }
+
+          @if (evaluationResult()) {
+            <div class="evaluation-result"
+                 [class.approved]="evaluationResult()!.accepted"
+                 [class.rejected]="!evaluationResult()!.accepted">
+              <mat-icon>
+                {{ evaluationResult()!.accepted ? 'check_circle' : 'cancel' }}
+              </mat-icon>
+              <div>
+                <strong>
+                  {{ evaluationResult()!.accepted ? 'Cliente Aprobado' : 'Cliente No Califica' }}
+                </strong>
+                <p>{{ evaluationResult()!.reason }}</p>
+              </div>
+            </div>
+          }
+        </section>
+
+        <!-- STEP 4: Parámetros de Simulación -->
+        <section class="form-section">
+          <div class="section-header">
+            <div class="section-number">4</div>
+            <div>
+              <h2 class="section-title">Parámetros de Simulación</h2>
+              <p class="section-subtitle">Configura los detalles del crédito</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <!-- Fecha de Inicio -->
+            <div class="form-group">
+              <label class="form-label">Fecha de Inicio</label>
+              <input
+                type="date"
+                class="form-input"
+                [(ngModel)]="formData().startDate"
+                (change)="updateFormField('startDate', $any($event.target).value)">
+            </div>
+
+            <!-- Moneda -->
+            <div class="form-group">
+              <label class="form-label">Moneda</label>
+              <select
+                class="form-select"
+                [(ngModel)]="formData().currencyId"
+                (change)="updateFormField('currencyId', +$any($event.target).value)">
+                @for (currency of currencies(); track currency.id) {
+                  <option [value]="currency.id">{{ getCurrencyDisplayName(currency) }} ({{ currency.symbol }})</option>
+                }
+              </select>
+            </div>
+
+            <!-- Tasa de Interés -->
+            <div class="form-group full-width">
+              <h3 class="subsection-title">Tasa de Interés</h3>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Tipo de Tasa</label>
+                  <select
+                    class="form-select"
+                    [(ngModel)]="formData().interestRateType"
+                    (change)="onInterestRateTypeChange($any($event.target).value)">
+                    @for (type of interestRateTypes; track type) {
+                      <option [value]="type">{{ type }}</option>
+                    }
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Periodo</label>
+                  <select
+                    class="form-select"
+                    [(ngModel)]="formData().interestRatePeriod"
+                    (change)="updateFormField('interestRatePeriod', $any($event.target).value)">
+                    @for (period of periods; track period) {
+                      <option [value]="period">{{ period }}</option>
+                    }
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Porcentaje (%)</label>
+                  <input
+                    type="number"
+                    class="form-input"
+                    [(ngModel)]="formData().interestRatePercentage"
+                    (change)="updateFormField('interestRatePercentage', +$any($event.target).value)"
+                    step="0.01"
+                    min="0">
+                </div>
+
+                @if (showInterestCapitalization()) {
+                  <div class="form-group">
+                    <label class="form-label">Capitalización</label>
+                    <select
+                      class="form-select"
+                      [(ngModel)]="formData().interestRateNominalCapitalization"
+                      (change)="updateFormField('interestRateNominalCapitalization', $any($event.target).value)">
+                      @for (period of periods; track period) {
+                        <option [value]="period">{{ period }}</option>
+                      }
+                    </select>
+                  </div>
+                }
+              </div>
+            </div>
+
+            <!-- COK -->
+            <div class="form-group full-width">
+              <h3 class="subsection-title">COK (Costo de Oportunidad del Cliente)</h3>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Tipo de Tasa</label>
+                  <select
+                    class="form-select"
+                    [(ngModel)]="formData().cokType"
+                    (change)="onCokTypeChange($any($event.target).value)">
+                    @for (type of interestRateTypes; track type) {
+                      <option [value]="type">{{ type }}</option>
+                    }
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Periodo</label>
+                  <select
+                    class="form-select"
+                    [(ngModel)]="formData().cokPeriod"
+                    (change)="updateFormField('cokPeriod', $any($event.target).value)">
+                    @for (period of periods; track period) {
+                      <option [value]="period">{{ period }}</option>
+                    }
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Porcentaje (%)</label>
+                  <input
+                    type="number"
+                    class="form-input"
+                    [(ngModel)]="formData().cokPercentage"
+                    (change)="updateFormField('cokPercentage', +$any($event.target).value)"
+                    step="0.01"
+                    min="0">
+                </div>
+
+                @if (showCokCapitalization()) {
+                  <div class="form-group">
+                    <label class="form-label">Capitalización</label>
+                    <select
+                      class="form-select"
+                      [(ngModel)]="formData().cokNominalCapitalization"
+                      (change)="updateFormField('cokNominalCapitalization', $any($event.target).value)">
+                      @for (period of periods; track period) {
+                        <option [value]="period">{{ period }}</option>
+                      }
+                    </select>
+                  </div>
+                }
+              </div>
+            </div>
+
+            <!-- Bono del Buen Pagador -->
+            <div class="form-group full-width">
+              <label class="checkbox-label">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="formData().isBonusRequired"
+                  (change)="updateFormField('isBonusRequired', $any($event.target).checked)">
+                <span>¿Aplicar Bono del Buen Pagador?</span>
+              </label>
+            </div>
+
+            <!-- Período de Gracia -->
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Período de Gracia</label>
+                <select
+                  class="form-select"
+                  [value]="formData().gracePeriodType"
+                  (change)="onGracePeriodTypeChange($any($event.target).value)">
+                  @for (type of gracePeriodTypes; track type) {
+                    <option [value]="type">{{ gracePeriodTypeLabels[type] }}</option>
+                  }
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">
+                  Meses de Período de Gracia
+                </label>
+                <input
+                  type="number"
+                  class="form-input"
+                  [value]="formData().gracePeriodMonths"
+                  [disabled]="isGracePeriodMonthsDisabled()"
+                  (input)="onGracePeriodMonthsChange(+$any($event.target).value)"
+                  min="0"
+                  max="36"
+                  placeholder="Ej: 6">
+              </div>
+            </div>
+
+            <!-- Años de Plazo -->
+            <div class="form-group">
+              <label class="form-label">Años de Plazo</label>
+              <input
+                type="number"
+                class="form-input"
+                [(ngModel)]="formData().yearsPaymentTerm"
+                (change)="onYearsPaymentTermChange(+$any($event.target).value)"
+                min="1"
+                max="30">
+            </div>
+
+            <!-- Cuota Inicial -->
+            <div class="form-group">
+              <label class="form-label">Cuota Inicial (%)</label>
+              <input
+                type="number"
+                class="form-input"
+                [(ngModel)]="formData().downPaymentPercentage"
+                (change)="onDownPaymentChange(+$any($event.target).value)"
+                min="1"
+                max="99"
+                step="0.01">
+            </div>
+
+            <!-- Historial Crediticio -->
+            <div class="form-group full-width">
+              <label class="checkbox-label">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="formData().hasCreditHistory"
+                  (change)="updateFormField('hasCreditHistory', $any($event.target).checked)">
+                <span>¿Tiene historial crediticio?</span>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <!-- STEP 5: Costos -->
+        <section class="form-section">
+          <div class="section-header">
+            <div class="section-number">5</div>
+            <div>
+              <h2 class="section-title">Costos</h2>
+              <p class="section-subtitle">Costos iniciales y periódicos</p>
+            </div>
+          </div>
+          <div class="cost-warning-banner">
+            <mat-icon>info</mat-icon>
+            <div class="warning-content">
+              <strong>Importante:</strong>
+              <p>
+                Algunos costos pueden ser reemplazados automáticamente por los valores establecidos por la entidad financiera seleccionada.
+                Los valores que ingreses aquí serán verificados y ajustados según las políticas del banco durante la simulación.
+              </p>
+            </div>
+          </div>
+          <!-- Costos Iniciales -->
+          <div class="costs-subsection">
+            <h3 class="subsection-title">Costos Iniciales</h3>
+            <div class="form-grid-costs">
+              <div class="form-group">
+                <label class="form-label">Gastos Notariales</label>
+                <input
+                  type="number"
+                  class="form-input"
+                  [(ngModel)]="formData().notaryCost"
+                  (change)="updateFormField('notaryCost', +$any($event.target).value)"
+                  step="0.01"
+                  min="0">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Gastos Registrales</label>
+                <input
+                  type="number"
+                  class="form-input"
+                  [(ngModel)]="formData().registryCost"
+                  (change)="updateFormField('registryCost', +$any($event.target).value)"
+                  step="0.01"
+                  min="0">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Gastos de Tasación</label>
+                <input
+                  type="number"
+                  class="form-input"
+                  [(ngModel)]="formData().appraisal"
+                  (change)="updateFormField('appraisal', +$any($event.target).value)"
+                  step="0.01"
+                  min="0">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Comisión de Estudio de Pólizas</label>
+                <input
+                  type="number"
+                  class="form-input"
+                  [(ngModel)]="formData().studyCommission"
+                  (change)="updateFormField('studyCommission', +$any($event.target).value)"
+                  step="0.01"
+                  min="0">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Comisión de Activación</label>
+                <input
+                  type="number"
+                  class="form-input"
+                  [(ngModel)]="formData().activationCommission"
+                  (change)="updateFormField('activationCommission', +$any($event.target).value)"
+                  step="0.01"
+                  min="0">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Honorarios Profesionales</label>
+                <input
+                  type="number"
+                  class="form-input"
+                  [(ngModel)]="formData().professionalFeesCost"
+                  (change)="updateFormField('professionalFeesCost', +$any($event.target).value)"
+                  step="0.01"
+                  min="0">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Derecho de Documentación</label>
+                <input
+                  type="number"
+                  class="form-input"
+                  [(ngModel)]="formData().documentationFee"
+                  (change)="updateFormField('documentationFee', +$any($event.target).value)"
+                  step="0.01"
+                  min="0">
+              </div>
+            </div>
+          </div>
+
+          <!-- Costos Periódicos -->
+          <div class="costs-subsection">
+            <h3 class="subsection-title">Costos Periódicos</h3>
+            <div class="form-grid-costs">
+              <div class="form-group">
+                <label class="form-label">Comisión Periódica</label>
+                <input
+                  type="number"
+                  class="form-input"
+                  [(ngModel)]="formData().periodicCommission"
+                  (change)="updateFormField('periodicCommission', +$any($event.target).value)"
+                  step="0.01"
+                  min="0">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Portes</label>
+                <input
+                  type="number"
+                  class="form-input"
+                  [(ngModel)]="formData().shippingCosts"
+                  (change)="updateFormField('shippingCosts', +$any($event.target).value)"
+                  step="0.01"
+                  min="0">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Gastos de Administración</label>
+                <input
+                  type="number"
+                  class="form-input"
+                  [(ngModel)]="formData().administrationExpenses"
+                  (change)="updateFormField('administrationExpenses', +$any($event.target).value)"
+                  step="0.01"
+                  min="0">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Seguro de Desgravamen (%)</label>
+                <input
+                  type="number"
+                  class="form-input"
+                  [(ngModel)]="formData().lifeInsurance"
+                  (change)="updateFormField('lifeInsurance', +$any($event.target).value)"
+                  step="0.001"
+                  min="0">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Seguro del Inmueble (%)</label>
+                <input
+                  type="number"
+                  class="form-input"
+                  [(ngModel)]="formData().riskInsurance"
+                  (change)="updateFormField('riskInsurance', +$any($event.target).value)"
+                  step="0.001"
+                  min="0">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Envío de Estado de Cuenta Mensual</label>
+                <input
+                  type="number"
+                  class="form-input"
+                  [(ngModel)]="formData().monthlyStatementDelivery"
+                  (change)="updateFormField('monthlyStatementDelivery', +$any($event.target).value)"
+                  step="0.01"
+                  min="0">
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button
+            class="btn-secondary"
+            (click)="cancel()"
+            [disabled]="isSimulating()">
+            <mat-icon>close</mat-icon>
+            Cancelar
+          </button>
+
+          <button
+            class="btn-primary"
+            (click)="simulate()"
+            [disabled]="isSimulating() || !isFormValid()">
+            @if (isSimulating()) {
+              <mat-icon>hourglass_empty</mat-icon>
+              <span>{{ isEditMode() ? 'Actualizando...' : 'Simulando...' }}</span>
+            } @else {
+              <mat-icon>{{ isEditMode() ? 'refresh' : 'calculate' }}</mat-icon>
+              <span>{{ isEditMode() ? 'Actualizar Simulación' : 'Simular Crédito' }}</span>
+            }
+          </button>
+        </div>
+
+      </div>
+
+      <!-- ==================== SIDEBAR RESUMEN ==================== -->
+      <aside class="sidebar-summary">
+        <div class="summary-card">
+          <h3 class="summary-title">Resumen</h3>
+
+          @if (selectedClient()) {
+            <div class="summary-section">
+              <p class="summary-label">Cliente</p>
+              <p class="summary-value">
+                {{ selectedClient()!.firstname }} {{ selectedClient()!.lastname }}
+              </p>
+              <p class="summary-detail">DNI: {{ selectedClient()!.dni }}</p>
+            </div>
+          }
+
+          @if (selectedHousing()) {
+            <div class="summary-section">
+              <p class="summary-label">Vivienda</p>
+              <p class="summary-value">{{ selectedHousing()!.title }}</p>
+              <p class="summary-price">{{ formatCurrency(selectedHousing()!.salePrice) }}</p>
+            </div>
+          }
+
+          @if (selectedFinanceEntity()) {
+            <div class="summary-section">
+              <p class="summary-label">Banco</p>
+              <p class="summary-value">{{ selectedFinanceEntity()!.name }}</p>
+            </div>
+          }
+
+          @if (formData().yearsPaymentTerm > 0) {
+            <div class="summary-section">
+              <p class="summary-label">Plazo</p>
+              <p class="summary-value">{{ formData().yearsPaymentTerm }} años ({{ formData().yearsPaymentTerm * 12 }} meses)</p>
+            </div>
+          }
+
+          @if (formData().downPaymentPercentage > 0) {
+            <div class="summary-section">
+              <p class="summary-label">Cuota Inicial</p>
+              <p class="summary-value">{{ formData().downPaymentPercentage }}%</p>
+              @if (selectedHousing()) {
+                <p class="summary-detail">
+                  {{ formatCurrency(selectedHousing()!.salePrice * formData().downPaymentPercentage / 100) }}
+                </p>
+              }
+            </div>
+          }
+
+          @if (formData().interestRatePercentage > 0) {
+            <div class="summary-section">
+              <p class="summary-label">Tasa de Interés</p>
+              <p class="summary-value">{{ formData().interestRatePercentage }}% {{ formData().interestRateType }}</p>
+            </div>
+          }
+        </div>
+      </aside>
+    </div>
+  }
+</div>

@@ -1,14 +1,22 @@
 import {Component, computed, input, output} from '@angular/core';
 import {FinanceEntity} from '../../../../model/financeEntity.model';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-finance-entity-card-component',
-  imports: [],
+  imports: [
+    MatIcon
+  ],
   templateUrl: './finance-entity-card-component.html',
   styleUrl: './finance-entity-card-component.css',
 })
 export class FinanceEntityCardComponent {
   entity = input.required<FinanceEntity>();
+  selectable = input<boolean>(false);
+  isSelected = input<boolean>(false);
+
+  onSelect = output<number>();
+  onViewDetails = output<number>();
 
   logoUrl = computed(() => {
     const map: Record<string, string> = {
@@ -34,7 +42,6 @@ export class FinanceEntityCardComponent {
     return map[this.entity().name] || 'assets/logos/default-bank.png';
   });
 
-
   typeLabel = computed(() => {
     const labels: Record<string, string> = {
       BANCA_MULTIPLE: 'Banca Múltiple',
@@ -45,39 +52,16 @@ export class FinanceEntityCardComponent {
     return labels[this.entity().type] || this.entity().type;
   });
 
-  housingPriceRange = computed(() => {
-    const min = this.entity().minimumHousingPrice;
-    const max = this.entity().maximumHousingPrice;
-    if (!min && !max) return 'No disponible';
-    if (min && max) return `S/ ${min.toLocaleString()} - S/ ${max.toLocaleString()}`;
-    if (min) return `Desde S/ ${min.toLocaleString()}`;
-    if (max) return `Hasta S/ ${max.toLocaleString()}`;
-    return 'No disponible';
-  });
+  handleCardClick(): void {
+    // Solo emite selección si es seleccionable
+    if (this.selectable()) {
+      this.onSelect.emit(this.entity().id);
+    }
+  }
 
-  downPaymentRange = computed(() => {
-    const min = this.entity().minimumDownPaymentPercentage;
-    const max = this.entity().maximumDownPaymentPercentage;
-    if (!min && !max) return 'No disponible';
-    if (min && max) return `${(min * 100).toFixed(1)}% - ${(max * 100).toFixed(1)}%`;
-    if (min) return `Mínimo ${(min * 100).toFixed(1)}%`;
-    if (max) return `Máximo ${(max * 100).toFixed(1)}%`;
-    return 'No disponible';
-  });
-
-  termRange = computed(() => {
-    const min = this.entity().minimumMonthPaymentTerm;
-    const max = this.entity().maximumMonthPaymentTerm;
-    if (!min && !max) return 'No disponible';
-    const toYears = (m: number) => m >= 12 ? `${m/12} años` : `${m} meses`;
-    if (min && max) return `${toYears(min)} - ${toYears(max)}`;
-    if (min) return `Mínimo ${toYears(min)}`;
-    if (max) return `Máximo ${toYears(max)}`;
-    return 'No disponible';
-  });
-
-  minimumSalary = computed(() => {
-    const salary = this.entity().minimumSalary;
-    return salary ? `S/ ${salary.toLocaleString()}` : 'No disponible';
-  });
+  handleViewDetails(event: Event): void {
+    // Prevenir que el click se propague al card
+    event.stopPropagation();
+    this.onViewDetails.emit(this.entity().id);
+  }
 }

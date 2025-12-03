@@ -1,47 +1,31 @@
-<div class="entity-card">
-  <div class="header">
-    <img [src]="logoUrl()" [alt]="entity().name" class="logo" />
-    <div class="titles">
-      <h3 class="name">{{ entity().name }}</h3>
-      <p class="type">{{ typeLabel() }}</p>
+<div
+  class="entity-card"
+  [class.selectable]="selectable()"
+  [class.selected]="selectable() && isSelected()"
+  (click)="handleCardClick()">
+
+  <!-- Botón Ver Detalles -->
+  <button class="btn-details" (click)="handleViewDetails($event)">
+    <mat-icon>visibility</mat-icon>
+    <span>Ver Detalles</span>
+  </button>
+
+  <!-- Badge de Seleccionado -->
+  @if (selectable() && isSelected()) {
+    <div class="selected-badge">
+      <mat-icon>check_circle</mat-icon>
+      <span>Seleccionado</span>
     </div>
+  }
+
+  <!-- Logo -->
+  <div class="logo-container">
+    <img [src]="logoUrl()" [alt]="entity().name" class="logo" />
   </div>
 
-  <div class="details">
-    <div class="detail-row">
-      <span class="label">Precio vivienda:</span>
-      <span class="value">{{ housingPriceRange() }}</span>
-    </div>
-
-    <div class="detail-row">
-      <span class="label">Cuota inicial:</span>
-      <span class="value">{{ downPaymentRange() }}</span>
-    </div>
-
-    <div class="detail-row">
-      <span class="label">Plazo:</span>
-      <span class="value">{{ termRange() }}</span>
-    </div>
-
-    <div class="detail-row">
-      <span class="label">Ingreso mínimo:</span>
-      <span class="value">{{ minimumSalary() }}</span>
-    </div>
-
-    @if (entity().allowsUsedHousing !== null) {
-      <div class="detail-row">
-        <span class="label">Vivienda usada:</span>
-        <span class="value" [class.yes]="entity().allowsUsedHousing" [class.no]="!entity().allowsUsedHousing">
-          {{ entity().allowsUsedHousing ? 'Sí acepta' : 'No acepta' }}
-        </span>
-      </div>
-    }
-
-    @if (entity().inProjectMaxGracePeriodMonths !== null) {
-      <div class="detail-row">
-        <span class="label">Gracia (en proyecto):</span>
-        <span class="value">Hasta {{ entity().inProjectMaxGracePeriodMonths }} meses</span>
-      </div>
-    }
+  <!-- Información -->
+  <div class="info">
+    <h3 class="name">{{ entity().name }}</h3>
+    <p class="type">{{ typeLabel() }}</p>
   </div>
 </div>

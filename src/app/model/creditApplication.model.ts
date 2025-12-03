@@ -1,179 +1,4 @@
-// // models/enums/bonus-type.enum.ts
-// export enum BonusType {
-//   VIVIENDA_TRADICIONAL = 'VIVIENDA_TRADICIONAL',
-//   VIVIENDA_SOSTENIBLE = 'VIVIENDA_SOSTENIBLE',
-//   INTEGRADOR_TRADICIONAL = 'INTEGRADOR_TRADICIONAL',
-//   INTEGRADOR_SOSTENIBLE = 'INTEGRADOR_SOSTENIBLE',
-//   NULL = 'NULL'
-// }
-//
-// // models/enums/grace-period-type.enum.ts
-// export enum GracePeriodType {
-//   TOTAL = 'TOTAL',
-//   PARCIAL = 'PARCIAL',
-//   NULL = 'NULL'
-// }
-//
-// // models/enums/interest-rate-type.enum.ts
-// export enum InterestRateType {
-//   NOMINAL = 'NOMINAL',
-//   EFECTIVA = 'EFECTIVA'
-// }
-//
-// // models/enums/period.enum.ts
-// export enum Period {
-//   DIARIA = 'DIARIA',
-//   QUINCENAL = 'QUINCENAL',
-//   MENSUAL = 'MENSUAL',
-//   BIMESTRAL = 'BIMESTRAL',
-//   TRIMESTRAL = 'TRIMESTRAL',
-//   CUATRIMESTRAL = 'CUATRIMESTRAL',
-//   SEMESTRAL = 'SEMESTRAL',
-//   ANUAL = 'ANUAL',
-//   NULL = 'NULL'
-// }
-//
-// export interface BonusResource {
-//   id: number;
-//   isApplied: boolean;
-//   givenAmount: number;
-//   bonusType: BonusType | string;
-// }
-//
-// export interface GracePeriodResource {
-//   id: number;
-//   type: GracePeriodType | string;
-//   months: number;
-// }
-//
-// export interface InterestRateResource {
-//   id: number;
-//   type: InterestRateType | string;
-//   period: Period | string;
-//   percentage: number;
-//   nominalCapitalization: Period | string;
-//   tem: number;
-// }
-//
-// export interface InitialCostsResource {
-//   notaryCost: number;
-//   registryCost: number;
-//   appraisal: number;
-//   studyCommission: number;
-//   activationCommission: number;
-//   professionalFeesCost: number;
-//   documentationFee: number;
-// }
-//
-// export interface PeriodicCostsResource {
-//   periodicCommission: number;
-//   shippingCosts: number;
-//   administrationExpenses: number;
-//   lifeInsurance: number;
-//   riskInsurance: number;
-//   monthlyStatementDelivery: number;
-// }
-//
-// export interface RentIndicatorsResource {
-//   cok: number;
-//   tir: number;
-//   tcea: number;
-//   van: number;
-// }
-//
-// export interface TotalsResource {
-//   totalInterest: number;
-//   totalCapitalAmortization: number;
-//   totaLifeInsurance: number;
-//   totalRiskInsurance: number;
-//   totalPeriodicCommission: number;
-//   totalAdministrationFees: number;
-// }
-//
-// export interface PaymentResource {
-//   id: number;
-//   paymentDate: string;
-//   orderNumber: number;
-//   tem: number;
-//   gracePeriodType: GracePeriodType | string;
-//   initialBalance: number;
-//   interest: number;
-//   fee: number;
-//   amortization: number;
-//   periodicCosts: PeriodicCostsResource;
-//   finalBalance: number;
-//   cashFlow: number;
-// }
-//
-// export interface CreditApplicationFullResource {
-//   id: number;
-//   realStateCompanyId: number;
-//   startDate: string;
-//   clientId: number;
-//   housingId: number;
-//   currencyId: number;
-//   financeEntityId: number;
-//   financeEntityApproved: boolean;
-//   financeEntityReason?: string;
-//   interestRate: InterestRateResource;
-//   cok: InterestRateResource;
-//   gracePeriod: GracePeriodResource;
-//   initialCosts: InitialCostsResource;
-//   periodicCosts: PeriodicCostsResource;
-//   downPaymentPercentage: number;
-//   financing: number;
-//   monthsPaymentTerm: number;
-//   totals: TotalsResource;
-//   rentIndicators: RentIndicatorsResource;
-//   bonus: BonusResource;
-//   payments: PaymentResource[];
-// }
-//
-// export interface CreateCreditApplicationResource {
-//   realStateCompanyId: number;
-//   startDate: string;
-//   clientId: number;
-//   housingId: number;
-//   currencyId: number;
-//   financialEntityId: number;
-//   interestRateType: string;
-//   interestRatePeriod: string;
-//   interestRatePercentage: number;
-//   interestRateNominalCapitalization: string;
-//   cokType: string;
-//   cokPeriod: string;
-//   cokPercentage: number;
-//   cokNominalCapitalization: string;
-//   isBonusRequired: boolean;
-//   gracePeriodType: string;
-//   gracePeriodMonths: number;
-//   notaryCost: number;
-//   registryCost: number;
-//   appraisal: number;
-//   studyCommission: number;
-//   activationCommission: number;
-//   professionalFeesCost: number;
-//   documentationFee: number;
-//   periodicCommission: number;
-//   shippingCosts: number;
-//   administrationExpenses: number;
-//   lifeInsurance: number;
-//   riskInsurance: number;
-//   monthlyStatementDelivery: number;
-//   yearsPaymentTerm: number;
-//   downPaymentPercentage: number;
-//   hasCreditHistory: boolean;
-// }
-//
-// export interface CreditSimulationEnriched extends CreditApplicationFullResource {
-//   clientFirstname: string;
-//   clientLastname: string;
-//   clientDni: string;
-//   financeEntityName: string;
-//   housingAddress?: string;     // opcional
-//   housingPrice?: number;       // opcional
-//   monthlyFee: number;          // calculado: totals.totalInterest / monthsPaymentTerm + amortización
-// }
+// src/app/credit-simulation/model/creditApplication.model.ts
 
 // ==================== ENUMS ====================
 
@@ -208,7 +33,7 @@ export enum Period {
   NULL = 'NULL'
 }
 
-// ==================== LABELS/TRADUCCIONES ====================
+// ==================== LABELS ====================
 
 export const BonusTypeLabels: Record<BonusType, string> = {
   [BonusType.VIVIENDA_TRADICIONAL]: 'Vivienda Tradicional',
@@ -219,9 +44,9 @@ export const BonusTypeLabels: Record<BonusType, string> = {
 };
 
 export const GracePeriodTypeLabels: Record<GracePeriodType, string> = {
-  [GracePeriodType.TOTAL]: 'Total',
-  [GracePeriodType.PARCIAL]: 'Parcial',
-  [GracePeriodType.NULL]: 'Sin Período de Gracia'
+  [GracePeriodType.TOTAL]: 'Gracia Total',
+  [GracePeriodType.PARCIAL]: 'Gracia Parcial',
+  [GracePeriodType.NULL]: 'Sin Gracia'
 };
 
 export const InterestRateTypeLabels: Record<InterestRateType, string> = {
@@ -241,31 +66,24 @@ export const PeriodLabels: Record<Period, string> = {
   [Period.NULL]: 'N/A'
 };
 
-// ==================== INTERFACES - RESOURCES ====================
+// ==================== SUB-INTERFACES ====================
 
-export interface BonusResource {
-  id: number;
-  isApplied: boolean;
-  givenAmount: number;
-  bonusType: string;
-}
-
-export interface InterestRateResource {
-  id: number;
-  type: string;
-  period: string;
+export interface InterestRate {
+  id?: number;
+  type: InterestRateType;
+  period: Period;
   percentage: number;
-  nominalCapitalization: string;
+  nominalCapitalization: Period;
   tem: number;
 }
 
-export interface GracePeriodResource {
-  id: number;
-  type: string;
+export interface GracePeriod {
+  id?: number;
+  type: GracePeriodType;
   months: number;
 }
 
-export interface InitialCostsResource {
+export interface InitialCosts {
   notaryCost: number;
   registryCost: number;
   appraisal: number;
@@ -275,7 +93,7 @@ export interface InitialCostsResource {
   documentationFee: number;
 }
 
-export interface PeriodicCostsResource {
+export interface PeriodicCosts {
   periodicCommission: number;
   shippingCosts: number;
   administrationExpenses: number;
@@ -284,24 +102,31 @@ export interface PeriodicCostsResource {
   monthlyStatementDelivery: number;
 }
 
-export interface TotalsResource {
-  totalInterest: number;
-  totalCapitalAmortization: number;
-  totaLifeInsurance: number;
-  totalRiskInsurance: number;
-  totalPeriodicCommission: number;
-  totalAdministrationFees: number;
+export interface Bonus {
+  id?: number;
+  isApplied: boolean;
+  givenAmount: number;
+  bonusType: BonusType;
 }
 
-export interface RentIndicatorsResource {
+export interface RentIndicators {
   cok: number;
   tir: number;
   tcea: number;
   van: number;
 }
 
-export interface PaymentResource {
-  id: number;
+export interface Totals {
+  totalInterest: number;
+  totalCapitalAmortization: number;
+  totaLifeInsurance: number;  // ⚠️ TYPO del backend (mantener)
+  totalRiskInsurance: number;
+  totalPeriodicCommission: number;
+  totalAdministrationFees: number;
+}
+
+export interface Payment {
+  id?: number;
   paymentDate: string;
   orderNumber: number;
   tem: number;
@@ -310,12 +135,14 @@ export interface PaymentResource {
   interest: number;
   fee: number;
   amortization: number;
-  periodicCosts: PeriodicCostsResource;
+  periodicCosts: PeriodicCosts;
   finalBalance: number;
   cashFlow: number;
 }
 
-export interface CreditApplicationResource {
+// ==================== MAIN INTERFACE (GET RESPONSE) ====================
+
+export interface CreditApplication {
   id: number;
   realStateCompanyId: number;
   startDate: string;
@@ -325,41 +152,21 @@ export interface CreditApplicationResource {
   financeEntityId: number;
   financeEntityApproved: boolean;
   financeEntityReason: string;
-  interestRate: InterestRateResource;
-  cok: InterestRateResource;
-  gracePeriod: GracePeriodResource;
-  initialCosts: InitialCostsResource;
-  periodicCosts: PeriodicCostsResource;
+  interestRate: InterestRate;
+  cok: InterestRate;
+  gracePeriod: GracePeriod;
+  initialCosts: InitialCosts;
+  periodicCosts: PeriodicCosts;
   downPaymentPercentage: number;
   financing: number;
   monthsPaymentTerm: number;
-  totals: TotalsResource;
-  rentIndicators: RentIndicatorsResource;
-  bonus: BonusResource;
-  payments: PaymentResource[];
+  totals: Totals;
+  rentIndicators: RentIndicators;
+  bonus: Bonus;
+  payments: Payment[];
 }
 
-// ==================== INTERFACES - REQUESTS ====================
-
-export interface CreateBonusRequest {
-  isRequired: boolean;
-  housingCategory: string;
-  housingSalePrice: number;
-  currency: any; // Currency object
-  isIntegrator: boolean;
-}
-
-export interface CreateInterestRateRequest {
-  type: string;
-  period: string;
-  percentage: number;
-  nominalCapitalization: string;
-}
-
-export interface CreateGracePeriodRequest {
-  type: string;
-  months: number;
-}
+// ==================== REQUEST INTERFACES ====================
 
 export interface CreateCreditApplicationRequest {
   realStateCompanyId: number;
@@ -432,60 +239,124 @@ export interface UpdateCreditApplicationRequest {
   hasCreditHistory: boolean;
 }
 
-// ==================== INTERFACES EXTENDIDAS CON DATOS RELACIONADOS ====================
+// ==================== HELPER CLASS ====================
 
-// Para mostrar en el listado con datos completos
-export interface CreditApplicationListItem extends CreditApplicationResource {
+export class CreditApplicationHelper {
+  /**
+   * Calcula el total de costos iniciales
+   */
+  static getTotalInitialCosts(costs: InitialCosts): number {
+    return (
+      costs.notaryCost +
+      costs.registryCost +
+      costs.appraisal +
+      costs.studyCommission +
+      costs.activationCommission +
+      costs.professionalFeesCost +
+      costs.documentationFee
+    );
+  }
+
+  /**
+   * Calcula el total de costos periódicos (sin seguros)
+   */
+  static getTotalPeriodicCosts(costs: PeriodicCosts): number {
+    return (
+      costs.periodicCommission +
+      costs.shippingCosts +
+      costs.administrationExpenses +
+      costs.monthlyStatementDelivery
+    );
+  }
+
+  /**
+   * Formatea un número como moneda
+   */
+  static formatCurrency(value: number, currencySymbol: string = 'S/ '): string {
+    return `${currencySymbol}${value.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
+  }
+
+  /**
+   * Formatea un porcentaje
+   */
+  static formatPercentage(value: number, decimals: number = 2): string {
+    return `${value.toFixed(decimals)}%`;
+  }
+
+  /**
+   * Obtiene el color del estado de aprobación
+   */
+  static getApprovalStatusColor(approved: boolean): string {
+    return approved ? 'success' : 'danger';
+  }
+
+  /**
+   * Obtiene el ícono del estado de aprobación
+   */
+  static getApprovalStatusIcon(approved: boolean): string {
+    return approved ? 'check_circle' : 'cancel';
+  }
+
+  /**
+   * Calcula la cuota inicial en monto
+   */
+  static calculateDownPaymentAmount(
+    salePrice: number,
+    downPaymentPercentage: number
+  ): number {
+    return (salePrice * downPaymentPercentage) / 100;
+  }
+
+  /**
+   * Verifica si hay período de gracia activo en un pago
+   */
+  static hasGracePeriod(payment: Payment): boolean {
+    return payment.gracePeriodType !== GracePeriodType.NULL;
+  }
+
+  /**
+   * Obtiene el label del tipo de gracia de un pago
+   */
+  static getGracePeriodLabel(gracePeriodType: GracePeriodType): string {
+    return GracePeriodTypeLabels[gracePeriodType] || 'N/A';
+  }
+
+  /**
+   * Calcula el total a pagar (financiamiento + intereses + costos)
+   */
+  static calculateTotalToPay(creditApp: CreditApplication): number {
+    return (
+      creditApp.financing +
+      creditApp.totals.totalInterest +
+      creditApp.totals.totaLifeInsurance +
+      creditApp.totals.totalRiskInsurance +
+      creditApp.totals.totalPeriodicCommission +
+      creditApp.totals.totalAdministrationFees
+    );
+  }
+
+  /**
+   * Obtiene el color según el valor del VAN
+   */
+  static getVanColor(van: number): string {
+    if (van > 0) return 'success';
+    if (van < 0) return 'danger';
+    return 'warning';
+  }
+
+  /**
+   * Obtiene descripción del VAN
+   */
+  static getVanDescription(van: number): string {
+    if (van > 0) return 'Proyecto rentable';
+    if (van < 0) return 'Proyecto no rentable';
+    return 'Punto de equilibrio';
+  }
+}
+
+export interface CreditApplicationListItem extends CreditApplication {
   clientName?: string;
   financeEntityName?: string;
   housingTitle?: string;
-  currencySymbol?: string;
+  bonusTypeLabel?: string;
 }
-
-// ==================== HELPERS/UTILITIES ====================
-
-export class CreditSimulationHelper {
-
-  // Formatear moneda
-  static formatCurrency(amount: number, currencySymbol: string = 'S/'): string {
-    return `${currencySymbol} ${amount.toLocaleString('es-PE', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    })}`;
-  }
-
-  // Formatear porcentaje
-  static formatPercentage(value: number): string {
-    return `${value.toFixed(2)}%`;
-  }
-
-  // Calcular cuota inicial basada en el porcentaje
-  static calculateInitialPayment(salePrice: number, percentage: number): number {
-    return (salePrice * percentage) / 100;
-  }
-
-  // Obtener color según aprobación
-  static getApprovalColor(approved: boolean): string {
-    return approved ? '#10B981' : '#EF4444';
-  }
-
-  // Obtener label de período de gracia
-  static getGracePeriodLabel(type: string, months: number): string {
-    if (type === 'NULL' || months === 0) return 'Sin período de gracia';
-    return `${GracePeriodTypeLabels[type as GracePeriodType]} - ${months} ${months === 1 ? 'mes' : 'meses'}`;
-  }
-
-  // Calcular total de costos iniciales
-  static calculateTotalInitialCosts(costs: InitialCostsResource): number {
-    return costs.notaryCost + costs.registryCost + costs.appraisal +
-      costs.studyCommission + costs.activationCommission +
-      costs.professionalFeesCost + costs.documentationFee;
-  }
-
-  // Calcular total de costos periódicos (sin seguros que ya están en la cuota)
-  static calculateTotalPeriodicCosts(costs: PeriodicCostsResource): number {
-    return costs.periodicCommission + costs.shippingCosts +
-      costs.administrationExpenses + costs.monthlyStatementDelivery;
-  }
-}
-

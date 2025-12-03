@@ -1,66 +1,418 @@
-/*.simulations-page {*/
-/*  padding: 40px;*/
-/*  max-width: 1520px;*/
-/*  margin: 0 auto;*/
-/*  animation: fadeIn 0.4s ease-in-out;*/
-/*}*/
 
-/*@keyframes fadeIn {*/
-/*  from { opacity: 0; transform: translateY(20px); }*/
-/*  to   { opacity: 1; transform: translateY(0); }*/
-/*}*/
+.simulations-page {
+  padding: 40px;
+  max-width: 1440px;
+  margin: 0 auto;
+  animation: fadeIn 0.4s ease-in-out;
+}
 
-/*.page-header, .actions-bar, .search-box, .search-input,*/
-/*.btn-new-simulation, .table-container, .clients-table {*/
-/*  !* Reutilizamos exactamente los mismos estilos de client-management *!*/
-/*  @extend .clients-page *; // Si usas SCSS con @extend*/
-/*}*/
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-/*!* O pega todo el CSS de client-management aquí y solo cambia: *!*/
-/*.btn-new-simulation {*/
-/*  background: #7c3aed; !* morado más financiero *!*/
-/*}*/
+/* Header */
+.page-header {
+  margin-bottom: 32px;
+}
 
-/*.btn-new-simulation:hover {*/
-/*  background: #8b5cf6;*/
-/*}*/
+.page-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 40px;
+  color: #111827;
+  margin: 0 0 8px 0;
+}
 
-/*.status-badge.approved {*/
-/*  background: #e8f5e9;*/
-/*  color: #2e7d32;*/
-/*}*/
+.page-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #34363d;
+  margin: 0 0 3rem 0;
+}
 
-/*.status-badge.rejected {*/
-/*  background: #ffebee;*/
-/*  color: #c62828;*/
-/*}*/
+/* Barra de acciones */
+.actions-bar {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+}
 
-/*.row-clickable {*/
-/*  cursor: pointer;*/
-/*  transition: background 0.2s;*/
-/*}*/
+.search-box {
+  position: relative;
+  flex: 1;
+  max-width: 1001px;
+}
 
-/*.row-clickable:hover {*/
-/*  background: #f8f9fa;*/
-/*}*/
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #565D6D;
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
 
-/*.cell-amount {*/
-/*  font-weight: 600;*/
-/*  color: #1a1a1a;*/
-/*}*/
+.search-input {
+  width: 100%;
+  height: 48px;
+  padding-left: 42px;
+  padding-right: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  color: #171A1F;
+  background: #FFFFFF;
+  border: 1px solid #DEE1E6;
+  border-radius: 3px;
+  outline: none;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
 
-/*.cell-rate {*/
-/*  font-weight: 600;*/
-/*  color: #7c3aed;*/
-/*}*/
+.search-input:hover {
+  border-color: #BE65C4;
+}
 
-/*.positive { color: #2e7d32; font-weight: 600; }*/
-/*.negative { color: #c62828; font-weight: 600; }*/
+.search-input:focus {
+  border-color: #BE65C4;
+  box-shadow: 0 0 0 3px rgba(190, 101, 196, 0.1);
+}
 
-/*.btn-view {*/
-/*  color: #565D6D;*/
-/*}*/
+.btn-new-simulation {
+  height: 48px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 500;
+  color: #FFFFFF;
+  background: #a300ae;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
 
-/*.btn-view:hover {*/
-/*  background: rgba(86, 93, 109, 0.08);*/
-/*}*/
+.btn-new-simulation mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.btn-new-simulation:hover {
+  background: #B54EBC;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.btn-new-simulation:active {
+  background: #A441AB;
+  transform: translateY(1px);
+}
+
+/* Tabla */
+.table-container {
+  background: #FFFFFF;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.simulations-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.simulations-table thead {
+  background: #F8F9FA;
+}
+
+.simulations-table th {
+  padding: 16px 24px;
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #565D6D;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.simulations-table th.text-center {
+  text-align: center;
+}
+
+.simulations-table td {
+  padding: 16px 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: #171A1F;
+  border-top: 1px solid #DEE1E6;
+}
+
+.simulations-table tbody tr {
+  transition: background 0.2s;
+}
+
+.simulations-table tbody tr:hover {
+  background: #F8F9FA;
+}
+
+/*Celdas con iconos */
+.client-info,
+.housing-info,
+.bank-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cell-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: #9CA3AF;
+  flex-shrink: 0;
+}
+
+.cell-client {
+  font-weight: 500;
+}
+
+.cell-housing {
+  color: #4B5563;
+}
+
+.cell-bank {
+  color: #4B5563;
+}
+
+/* Status Badge */
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.status-approved {
+  background: #D1FAE5;
+  color: #065F46;
+}
+
+.status-rejected {
+  background: #FEE2E2;
+  color: #991B1B;
+}
+
+.status-neutral{
+  background: #F3F4F6;
+  color: #6B7280;
+}
+
+/*Bonus Badge */
+.bonus-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.bonus-none {
+  background: #F3F4F6;
+  color: #6B7280;
+}
+
+.bonus-traditional {
+  background: #DBEAFE;
+  color: #1E40AF;
+}
+
+.bonus-sustainable {
+  background: #D1FAE5;
+  color: #065F46;
+}
+
+/* Acciones */
+.cell-actions {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-icon mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.btn-edit {
+  color: #565D6D;
+}
+
+.btn-edit:hover {
+  background: rgba(86, 93, 109, 0.08);
+}
+
+.btn-view {
+  color: #3B82F6;
+}
+
+.btn-view:hover {
+  background: rgba(59, 130, 246, 0.08);
+}
+
+.btn-delete {
+  color: #D33131;
+}
+
+.btn-delete:hover {
+  background: rgba(211, 49, 49, 0.08);
+}
+
+/* Estados vacío y loading */
+.empty-state,
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.empty-state mat-icon,
+.loading-state mat-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  color: #9CA3AF;
+  margin-bottom: 16px;
+}
+
+.loading-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.empty-state p,
+.loading-state p {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  color: #6B7280;
+  margin-bottom: 24px;
+}
+
+.btn-empty-action {
+  height: 48px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 500;
+  color: #FFFFFF;
+  background: #a300ae;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-empty-action mat-icon {
+  font-size: 20px;
+  margin-top: 15px;
+  width: 20px;
+  height: 18px;
+  color: #FFFFFF;
+}
+
+.btn-empty-action:hover {
+  background: #B54EBC;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .simulations-table {
+    font-size: 13px;
+  }
+
+  .simulations-table th,
+  .simulations-table td {
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .simulations-page {
+    padding: 24px 16px;
+  }
+
+  .page-title {
+    font-size: 28px;
+  }
+
+  .actions-bar {
+    flex-direction: column;
+  }
+
+  .search-box {
+    max-width: 100%;
+  }
+
+  .btn-new-simulation {
+    width: 100%;
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+
+  .simulations-table {
+    min-width: 1000px;
+  }
+}

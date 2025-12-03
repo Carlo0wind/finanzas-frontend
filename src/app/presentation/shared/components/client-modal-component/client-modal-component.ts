@@ -23,7 +23,7 @@ export class ClientModalComponent implements OnInit {
   isLoading = signal(false);
   currencies = signal<CurrencyResource[]>([]);
   previousCurrencyId: number | null = null;
-  readonly MAX_INCOME_FOR_INTEGRATOR = 46746;
+  readonly MAX_INCOME_FOR_INTEGRATOR = 4674;
   readonly EXCHANGE_RATE = 3.39;
 
   canBeIntegrator = computed(() => {
