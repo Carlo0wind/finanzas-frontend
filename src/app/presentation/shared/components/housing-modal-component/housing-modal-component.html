@@ -1,0 +1,263 @@
+<div class="modal-container">
+  <!-- Header -->
+  <div class="modal-header">
+    <h2 class="modal-title">
+      {{ data.mode === 'create' ? 'Nueva Oferta' : 'Editar Oferta' }}
+    </h2>
+    <button
+      mat-icon-button
+      class="close-button"
+      (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Form -->
+  <form [formGroup]="housingForm" (ngSubmit)="onSubmit()" class="modal-form">
+
+    <!-- Sección: Información Básica -->
+    <div class="form-section">
+      <h3 class="section-title">Información Básica</h3>
+
+      <!-- Título -->
+      <div class="form-field full-width">
+        <label class="field-label">
+          Título de la Propiedad <span class="required">*</span>
+        </label>
+        <input
+          type="text"
+          class="field-input"
+          formControlName="title"
+          placeholder="Departamento Moderno en San Isidro">
+        @if (isFieldInvalid('title')) {
+          <span class="error-text">El título es requerido</span>
+        }
+      </div>
+
+      <!-- Descripción -->
+      <div class="form-field full-width">
+        <label class="field-label">
+          Descripción <span class="required">*</span>
+        </label>
+        <textarea
+          class="field-textarea"
+          formControlName="description"
+          rows="3"
+          placeholder="Describe las características principales de la propiedad..."></textarea>
+        @if (isFieldInvalid('description')) {
+          <span class="error-text">La descripción es requerida</span>
+        }
+      </div>
+    </div>
+
+    <div class="form-divider"></div>
+
+    <!-- Sección: Ubicación -->
+    <div class="form-section">
+      <h3 class="section-title">Ubicación</h3>
+
+      <!-- Provincia y Distrito -->
+      <div class="form-row">
+        <div class="form-field">
+          <label class="field-label">
+            Provincia <span class="required">*</span>
+          </label>
+          <select class="field-select" formControlName="province">
+            <option value="">Selecciona una provincia</option>
+            @for (province of provinces; track province.value) {
+              <option [value]="province.value">{{ province.label }}</option>
+            }
+          </select>
+          @if (isFieldInvalid('province')) {
+            <span class="error-text">La provincia es requerida</span>
+          }
+        </div>
+
+        <div class="form-field">
+          <label class="field-label">
+            Distrito <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            class="field-input"
+            formControlName="district"
+            placeholder="San Isidro">
+          @if (isFieldInvalid('district')) {
+            <span class="error-text">El distrito es requerido</span>
+          }
+        </div>
+      </div>
+
+      <!-- Dirección y Departamento -->
+      <div class="form-row">
+        <div class="form-field">
+          <label class="field-label">
+            Dirección <span class="required">*</span>
+          </label>
+          <input
+            type="text"
+            class="field-input"
+            formControlName="address"
+            placeholder="Av. Javier Prado 123">
+          @if (isFieldInvalid('address')) {
+            <span class="error-text">La dirección es requerida</span>
+          }
+        </div>
+
+        <div class="form-field">
+          <label class="field-label">
+            Departamento
+          </label>
+          <input
+            type="text"
+            class="field-input"
+            formControlName="department"
+            placeholder="304 (opcional)">
+          <span class="helper-text">Deja vacío si es una casa</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-divider"></div>
+
+    <!-- Sección: Características -->
+    <div class="form-section">
+      <h3 class="section-title">Características</h3>
+
+      <!-- Área y Habitaciones -->
+      <div class="form-row">
+        <div class="form-field">
+          <label class="field-label">
+            Área (m²) <span class="required">*</span>
+          </label>
+          <input
+            type="number"
+            class="field-input"
+            formControlName="area"
+            placeholder="85"
+            min="1"
+            step="0.1">
+          @if (isFieldInvalid('area')) {
+            <span class="error-text">El área es requerida</span>
+          }
+        </div>
+
+        <div class="form-field">
+          <label class="field-label">
+            Habitaciones <span class="required">*</span>
+          </label>
+          <input
+            type="number"
+            class="field-input"
+            formControlName="roomQuantity"
+            placeholder="3"
+            min="1">
+          @if (isFieldInvalid('roomQuantity')) {
+            <span class="error-text">El número de habitaciones es requerido</span>
+          }
+        </div>
+      </div>
+
+      <!-- Estado y Categoría -->
+      <div class="form-row">
+        <div class="form-field">
+          <label class="field-label">
+            Estado <span class="required">*</span>
+          </label>
+          <select class="field-select" formControlName="housingState">
+            <option value="">Selecciona un estado</option>
+            @for (state of housingStates; track state.value) {
+              <option [value]="state.value">{{ state.label }}</option>
+            }
+          </select>
+          @if (isFieldInvalid('housingState')) {
+            <span class="error-text">El estado es requerido</span>
+          }
+        </div>
+
+        <div class="form-field">
+          <label class="field-label">
+            Tipo <span class="required">*</span>
+          </label>
+          <select class="field-select" formControlName="housingCategory">
+            <option value="">Selecciona un tipo</option>
+            @for (category of housingCategories; track category.value) {
+              <option [value]="category.value">{{ category.label }}</option>
+            }
+          </select>
+          @if (isFieldInvalid('housingCategory')) {
+            <span class="error-text">El tipo es requerido</span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="form-divider"></div>
+
+    <!-- Sección: Precio -->
+    <div class="form-section">
+      <h3 class="section-title">Precio de Venta</h3>
+
+      <!-- Moneda -->
+      <div class="form-field full-width">
+        <label class="field-label">
+          Moneda <span class="required">*</span>
+        </label>
+        <select class="field-select" formControlName="currencyId">
+          <option value="">Selecciona una moneda</option>
+          @for (currency of currencies(); track currency.id) {
+            <option [value]="currency.id">
+              {{ getCurrencyDisplayName(currency) }} ({{ currency.symbol }})
+            </option>
+          }
+        </select>
+        @if (isFieldInvalid('currencyId')) {
+          <span class="error-text">Selecciona una moneda</span>
+        }
+      </div>
+
+      <!-- Precio -->
+      <div class="form-field full-width">
+        <label class="field-label">
+          Precio de Venta
+          <span class="required">*</span>
+        </label>
+        <input
+          type="number"
+          class="field-input"
+          [class.field-disabled]="housingForm.get('salePrice')?.disabled"
+          formControlName="salePrice"
+          placeholder="350000"
+          min="1"
+          step="0.01">
+        @if (!housingForm.get('currencyId')?.value) {
+          <span class="helper-text">Primero selecciona una moneda</span>
+        }
+        @if (isFieldInvalid('salePrice')) {
+          <span class="error-text">El precio es requerido</span>
+        }
+      </div>
+    </div>
+
+    <!-- Botones -->
+    <div class="modal-actions">
+      <button
+        type="button"
+        class="btn-cancel"
+        (click)="onCancel()">
+        Cancelar
+      </button>
+
+      <button
+        type="submit"
+        class="btn-submit"
+        [disabled]="housingForm.invalid || isLoading()">
+        @if (isLoading()) {
+          Guardando...
+        } @else {
+          {{ data.mode === 'create' ? 'Crear Oferta' : 'Guardar Cambios' }}
+        }
+      </button>
+    </div>
+  </form>
+</div>

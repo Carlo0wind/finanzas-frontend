@@ -1,0 +1,482 @@
+<div class="details-container">
+  @if (isLoading()) {
+    <div class="loading-state">
+      <mat-icon>hourglass_empty</mat-icon>
+      <p>Cargando simulación...</p>
+    </div>
+  } @else if (creditApplication()) {
+    <!-- Header -->
+    <div class="page-header">
+      <div class="header-content">
+        <div>
+          <h1 class="page-title">Detalles de Simulación de Crédito</h1>
+          <p class="page-subtitle">
+            Simulación #{{ creditApplication()!.id }} - {{ formatDate(creditApplication()!.startDate) }}
+          </p>
+        </div>
+        <div class="header-actions">
+          <button class="btn-secondary" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+            Volver
+          </button>
+          <button class="btn-primary" (click)="editSimulation()">
+            <mat-icon>edit</mat-icon>
+            Editar
+          </button>
+          <button class="btn-danger" (click)="deleteSimulation()">
+            <mat-icon>delete</mat-icon>
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Banner -->
+      <!-- Status Banner -->
+    <div class="status-banner"
+         [class.approved]="clientQualifies()"
+         [class.rejected]="!clientQualifies()">
+      <mat-icon>
+        {{ clientQualifies() ? 'check_circle' : 'cancel' }}
+      </mat-icon>
+      <div class="status-content">
+        <h2 class="status-title">
+          {{ clientQualifies() ? 'Cliente Califica para el Crédito' : 'Cliente NO Califica para el Crédito' }}
+        </h2>
+        <p class="status-reason">{{ qualificationMessage() }}</p>
+      </div>
+    </div>
+
+    <!-- Content Grid -->
+      <div class="content-grid">
+        <!-- Información General -->
+        <section class="details-section">
+          <h2 class="section-title">
+            <mat-icon>info</mat-icon>
+            Información General
+          </h2>
+          <div class="summary-grid">
+            <div class="summary-item">
+              <span class="summary-label">Cliente</span>
+              <span class="summary-value">{{ clientName() }}</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Vivienda</span>
+              <span class="summary-value">{{ housingInfo() }}</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Entidad Financiera</span>
+              <span class="summary-value">{{ financeEntityName() }}</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Moneda</span>
+              <span class="summary-value">{{ currencySymbol() }}</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Fecha de Inicio</span>
+              <span class="summary-value">{{ formatDate(creditApplication()!.startDate) }}</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Plazo</span>
+              <span class="summary-value">
+                {{ creditApplication()!.monthsPaymentTerm }} meses
+                ({{ creditApplication()!.monthsPaymentTerm / 12 }} años)
+              </span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Cuota Inicial</span>
+              <span class="summary-value">{{ creditApplication()!.downPaymentPercentage }}%</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Financiamiento</span>
+              <span class="summary-value">
+                {{ currencySymbol() }} {{ formatCurrency(creditApplication()!.financing) }}
+              </span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Cuota Mensual</span>
+              <span class="summary-value">
+                {{ currencySymbol() }} {{ formatCurrency(monthlyFee()) }}
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tasas -->
+        <section class="details-section">
+          <h2 class="section-title">
+            <mat-icon>percent</mat-icon>
+            Tasas de Interés
+          </h2>
+          <div class="rates-grid">
+            <div class="rate-section">
+              <h3>Tasa de Interés</h3>
+              <div class="rate-details">
+                <p><strong>Tipo:</strong> {{ creditApplication()!.interestRate.type }}</p>
+                <p><strong>Período:</strong> {{ creditApplication()!.interestRate.period }}</p>
+                <p><strong>Porcentaje:</strong> {{ formatPercentage(creditApplication()!.interestRate.percentage) }}%</p>
+                @if (creditApplication()!.interestRate.nominalCapitalization !== 'NULL') {
+                  <p><strong>Capitalización:</strong> {{ creditApplication()!.interestRate.nominalCapitalization }}</p>
+                }
+                <p><strong>TEM:</strong> {{ formatPercentage(creditApplication()!.interestRate.tem) }}%</p>
+              </div>
+            </div>
+            <div class="rate-section">
+              <h3>COK (Costo de Oportunidad)</h3>
+              <div class="rate-details">
+                <p><strong>Tipo:</strong> {{ creditApplication()!.cok.type }}</p>
+                <p><strong>Período:</strong> {{ creditApplication()!.cok.period }}</p>
+                <p><strong>Porcentaje:</strong> {{ formatPercentage(creditApplication()!.cok.percentage) }}%</p>
+                @if (creditApplication()!.cok.nominalCapitalization !== 'NULL') {
+                  <p><strong>Capitalización:</strong> {{ creditApplication()!.cok.nominalCapitalization }}</p>
+                }
+                <p><strong>TEM:</strong> {{ formatPercentage(creditApplication()!.cok.tem) }}%</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Período de Gracia -->
+        <section class="details-section">
+          <h2 class="section-title">
+            <mat-icon>schedule</mat-icon>
+            Período de Gracia
+          </h2>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="info-label">Tipo:</span>
+              <span class="info-value">
+                @if (creditApplication()!.gracePeriod.type === 'NULL') {
+                  Sin período de gracia
+                } @else {
+                  {{ creditApplication()!.gracePeriod.type }}
+                }
+              </span>
+            </div>
+            @if (creditApplication()!.gracePeriod.type !== 'NULL') {
+              <div class="info-item">
+                <span class="info-label">Meses:</span>
+                <span class="info-value">{{ creditApplication()!.gracePeriod.months }}</span>
+              </div>
+            }
+          </div>
+        </section>
+
+        <!-- Bono del Buen Pagador -->
+          <section class="details-section bonus-section">
+            <h2 class="section-title">
+              <mat-icon>card_giftcard</mat-icon>
+              Bono del Buen Pagador
+            </h2>
+            <div class="bonus-info">
+              <div class="bonus-item">
+                <span class="bonus-label">Tipo de Bono:</span>
+                <span class="bonus-value">{{ formatBonusType(creditApplication()!.bonus.bonusType) }}</span>
+              </div>
+              <div class="bonus-item">
+                <span class="bonus-label">Monto del Bono:</span>
+                <span class="bonus-value bonus-amount">
+                  {{ currencySymbol() }} {{ formatCurrency(creditApplication()!.bonus.givenAmount) }}
+                </span>
+              </div>
+            </div>
+          </section>
+
+        <!-- Costos Iniciales -->
+        <section class="details-section">
+          <h2 class="section-title">
+            <mat-icon>receipt</mat-icon>
+            Costos Iniciales
+          </h2>
+          <div class="costs-grid">
+            <div class="cost-item">
+              <span class="cost-label">Gastos Notariales:</span>
+              <span class="cost-value">
+                {{ currencySymbol() }} {{ formatCurrency(creditApplication()!.initialCosts.notaryCost) }}
+              </span>
+            </div>
+            <div class="cost-item">
+              <span class="cost-label">Gastos Registrales:</span>
+              <span class="cost-value">
+                {{ currencySymbol() }} {{ formatCurrency(creditApplication()!.initialCosts.registryCost) }}
+              </span>
+            </div>
+            <div class="cost-item">
+              <span class="cost-label">Tasación:</span>
+              <span class="cost-value">
+                {{ currencySymbol() }} {{ formatCurrency(creditApplication()!.initialCosts.appraisal) }}
+              </span>
+            </div>
+            <div class="cost-item">
+              <span class="cost-label">Comisión de Estudio:</span>
+              <span class="cost-value">
+                {{ currencySymbol() }} {{ formatCurrency(creditApplication()!.initialCosts.studyCommission) }}
+              </span>
+            </div>
+            <div class="cost-item">
+              <span class="cost-label">Comisión de Activación:</span>
+              <span class="cost-value">
+                {{ currencySymbol() }} {{ formatCurrency(creditApplication()!.initialCosts.activationCommission) }}
+              </span>
+            </div>
+            <div class="cost-item">
+              <span class="cost-label">Honorarios Profesionales:</span>
+              <span class="cost-value">
+                {{ currencySymbol() }} {{ formatCurrency(creditApplication()!.initialCosts.professionalFeesCost) }}
+              </span>
+            </div>
+            <div class="cost-item">
+              <span class="cost-label">Documentación:</span>
+              <span class="cost-value">
+                {{ currencySymbol() }} {{ formatCurrency(creditApplication()!.initialCosts.documentationFee) }}
+              </span>
+            </div>
+            <div class="cost-item" style="border-top: 2px solid #E5E7EB; padding-top: 12px; margin-top: 8px;">
+              <span class="cost-label"><strong>TOTAL:</strong></span>
+              <span class="cost-value"><strong>
+                {{ currencySymbol() }} {{ formatCurrency(totalInitialCosts()) }}
+              </strong></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Costos Periódicos -->
+        <section class="details-section">
+          <h2 class="section-title">
+            <mat-icon>calendar_month</mat-icon>
+            Costos Periódicos
+          </h2>
+          <div class="costs-grid">
+            <div class="cost-item">
+              <span class="cost-label">Comisión Periódica:</span>
+              <span class="cost-value">
+                {{ currencySymbol() }} {{ formatCurrency(creditApplication()!.periodicCosts.periodicCommission) }}
+              </span>
+            </div>
+            <div class="cost-item">
+              <span class="cost-label">Portes:</span>
+              <span class="cost-value">
+                {{ currencySymbol() }} {{ formatCurrency(creditApplication()!.periodicCosts.shippingCosts) }}
+              </span>
+            </div>
+            <div class="cost-item">
+              <span class="cost-label">Gastos Administrativos:</span>
+              <span class="cost-value">
+                {{ currencySymbol() }} {{ formatCurrency(creditApplication()!.periodicCosts.administrationExpenses) }}
+              </span>
+            </div>
+            <div class="cost-item">
+              <span class="cost-label">Seguro de Desgravamen:</span>
+              <span class="cost-value">{{ creditApplication()!.periodicCosts.lifeInsurance }}%</span>
+            </div>
+            <div class="cost-item">
+              <span class="cost-label">Seguro de Riesgo:</span>
+              <span class="cost-value">{{ creditApplication()!.periodicCosts.riskInsurance }}%</span>
+            </div>
+            <div class="cost-item">
+              <span class="cost-label">Envío de Estado Cuenta:</span>
+              <span class="cost-value">
+                {{ currencySymbol() }} {{ formatCurrency(creditApplication()!.periodicCosts.monthlyStatementDelivery) }}
+              </span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Indicadores de Rentabilidad -->
+    @if (shouldShowResults()) {
+      <section class="details-section full-width">
+        <h2 class="section-title">
+          <mat-icon>trending_up</mat-icon>
+          Indicadores de Rentabilidad
+        </h2>
+        <div class="indicators-grid">
+          <div class="indicator-card">
+            <mat-icon>insights</mat-icon>
+            <div class="indicator-content">
+              <span class="indicator-label">COK</span>
+              <span class="indicator-value">{{ formatPercentage(creditApplication()!.rentIndicators.cok / 100) }}%</span>
+            </div>
+          </div>
+          <div class="indicator-card">
+            <mat-icon>analytics</mat-icon>
+            <div class="indicator-content">
+              <span class="indicator-label">TIR</span>
+              <span class="indicator-value">{{ formatPercentage(creditApplication()!.rentIndicators.tir / 100) }}%</span>
+            </div>
+          </div>
+          <div class="indicator-card">
+            <mat-icon>assessment</mat-icon>
+            <div class="indicator-content">
+              <span class="indicator-label">TCEA</span>
+              <span class="indicator-value">{{ formatPercentage(creditApplication()!.rentIndicators.tcea / 100) }}%</span>
+            </div>
+          </div>
+          <div [class]="getVanClass()">
+            <mat-icon>account_balance</mat-icon>
+            <div class="indicator-content">
+              <span class="indicator-label">VAN</span>
+              <span class="indicator-value">
+                  {{ currencySymbol() }} {{ formatVAN(creditApplication()!.rentIndicators.van) }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        @if (creditApplication()!.rentIndicators.van < 0) {
+          <div class="van-warning">
+            <mat-icon>warning</mat-icon>
+            <p>El VAN es negativo. Este crédito no es rentable según los criterios establecidos.</p>
+          </div>
+        } @else {
+          <div class="van-success">
+            <mat-icon>check_circle</mat-icon>
+            <p>El VAN es positivo. Este crédito es rentable según los criterios establecidos.</p>
+          </div>
+        }
+      </section>
+
+      <!-- Totales -->
+      <section class="details-section full-width">
+        <h2 class="section-title">
+          <mat-icon>calculate</mat-icon>
+          Totales del Crédito
+        </h2>
+        <div class="totals-grid">
+          <div class="total-item">
+            <span class="total-label">Total Intereses:</span>
+            <span class="total-value">
+              {{ currencySymbol() }} {{ formatCurrency(creditApplication()!.totals.totalInterest) }}
+            </span>
+          </div>
+          <div class="total-item">
+            <span class="total-label">Total Amortización:</span>
+            <span class="total-value">
+              {{ currencySymbol() }} {{ formatCurrency(creditApplication()!.totals.totalCapitalAmortization) }}
+            </span>
+          </div>
+          <div class="total-item">
+            <span class="total-label">Total Seguro Desgravamen:</span>
+            <span class="total-value">
+              {{ currencySymbol() }} {{ formatCurrency(creditApplication()!.totals.totaLifeInsurance) }}
+            </span>
+          </div>
+          <div class="total-item">
+            <span class="total-label">Total Seguro Riesgo:</span>
+            <span class="total-value">
+              {{ currencySymbol() }} {{ formatCurrency(creditApplication()!.totals.totalRiskInsurance) }}
+            </span>
+          </div>
+          <div class="total-item">
+            <span class="total-label">Total Comisiones:</span>
+            <span class="total-value">
+              {{ currencySymbol() }} {{ formatCurrency(creditApplication()!.totals.totalPeriodicCommission) }}
+            </span>
+          </div>
+          <div class="total-item">
+            <span class="total-label">Total Gastos Admin.:</span>
+            <span class="total-value">
+              {{ currencySymbol() }} {{ formatCurrency(creditApplication()!.totals.totalAdministrationFees) }}
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cronograma de Pagos -->
+      <section class="details-section full-width">
+        <h2 class="section-title">
+          <mat-icon>event_note</mat-icon>
+          Cronograma de Pagos
+        </h2>
+        <div class="table-container">
+          <table class="payments-table">
+            <thead>
+            <tr>
+              @for (col of displayedColumns; track col) {
+                <th>{{ columnLabels[col] }}</th>
+              }
+            </tr>
+            </thead>
+            <tbody>
+              @for (payment of sortedPayments(); track payment.id){
+                <tr [class]="getGracePeriodClass(payment.gracePeriodType)">
+                  <td class="cell-date">{{ formatDate(payment.paymentDate) }}</td>
+                  <td class="cell-center">{{ payment.orderNumber }}</td>
+                  <td class="cell-center">{{ formatPercentage(payment.tem) }}%</td>
+                  <td class="cell-center">{{ getGracePeriodText(payment.gracePeriodType) }}</td>
+                  <td class="cell-amount">{{ currencySymbol() }} {{ formatCurrency(payment.initialBalance) }}</td>
+                  <td class="cell-amount cell-interest" [class.negative-value]="isNegative(payment.interest)">
+                    {{ currencySymbol() }} {{ formatCurrency(payment.interest) }}
+                  </td>
+                  <td class="cell-amount cell-fee" [class.negative-value]="isNegative(payment.fee)">
+                    {{ currencySymbol() }} {{ formatCurrency(payment.fee) }}
+                  </td>
+                  <td class="cell-amount" [class.negative-value]="isNegative(payment.amortization)">
+                    {{ currencySymbol() }} {{ formatCurrency(payment.amortization) }}
+                  </td>
+                  <td class="cell-amount" [class.negative-value]="isNegative(payment.periodicCosts.periodicCommission)">
+                    {{ currencySymbol() }} {{ formatCurrency(payment.periodicCosts.periodicCommission) }}
+                  </td>
+                  <td class="cell-amount" [class.negative-value]="isNegative(payment.periodicCosts.shippingCosts)">
+                    {{ currencySymbol() }} {{ formatCurrency(payment.periodicCosts.shippingCosts) }}
+                  </td>
+                  <td class="cell-amount" [class.negative-value]="isNegative(payment.periodicCosts.administrationExpenses)">
+                    {{ currencySymbol() }} {{ formatCurrency(payment.periodicCosts.administrationExpenses) }}
+                  </td>
+                  <td class="cell-amount" [class.negative-value]="isNegative(payment.periodicCosts.lifeInsurance)">
+                    {{ currencySymbol() }} {{ formatCurrency(payment.periodicCosts.lifeInsurance) }}
+                  </td>
+                  <td class="cell-amount" [class.negative-value]="isNegative(payment.periodicCosts.riskInsurance)">
+                    {{ currencySymbol() }} {{ formatCurrency(payment.periodicCosts.riskInsurance) }}
+                  </td>
+                  <td class="cell-amount" [class.negative-value]="isNegative(payment.periodicCosts.monthlyStatementDelivery)">
+                    {{ currencySymbol() }} {{ formatCurrency(payment.periodicCosts.monthlyStatementDelivery) }}
+                  </td>
+                  <td class="cell-amount">{{ currencySymbol() }} {{ formatCurrency(payment.finalBalance) }}</td>
+                  <td class="cell-amount" [class.negative-value]="isNegative(payment.cashFlow)">
+                    {{ currencySymbol() }} {{ formatCurrency(payment.cashFlow) }}
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+  } @else {
+    <!-- Mensaje cuando no se muestran resultados -->
+    <div class="blocked-results-message">
+      <mat-icon>{{ getBlockedIcon() }}</mat-icon>
+      <h3>No se pueden mostrar los resultados de la simulación</h3>
+      <p class="blocked-reason">{{ getBlockedMessage() }}</p>
+      <p class="blocked-hint">Los datos ingresados se muestran arriba. Para ver los resultados completos, ajuste los parámetros según los requisitos de la entidad financiera.</p>
+    </div>
+  }
+    <!-- Footer Actions -->
+    <div class="footer-actions">
+      <button class="btn-secondary" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Volver al Listado
+      </button>
+      <div class="footer-actions-right">
+        <button class="btn-danger" (click)="deleteSimulation()">
+          <mat-icon>delete</mat-icon>
+          Eliminar Simulación
+        </button>
+        <button class="btn-primary" (click)="editSimulation()">
+          <mat-icon>edit</mat-icon>
+          Editar Simulación
+        </button>
+      </div>
+    </div>
+  } @else {
+    <div class="error-state">
+      <mat-icon>error</mat-icon>
+      <h2>No se pueden mostrar los detalles de la simulación</h2>
+      <p>No se pudo cargar la información de la simulación</p>
+      <button class="btn-primary" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Volver al Listado
+      </button>
+    </div>
+  }
+</div>

@@ -108,3 +108,15 @@ body {
 .p-2 { padding: 16px; }
 .p-3 { padding: 24px; }
 .p-4 { padding: 32px; }
+
+/* ==================== FINANCE ENTITY MODAL ==================== */
+.finance-entity-modal .mat-mdc-dialog-container {
+  padding: 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.finance-entity-modal .mat-mdc-dialog-surface {
+  border-radius: 16px;
+}
+

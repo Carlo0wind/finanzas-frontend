@@ -11,6 +11,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  animation: fadeIn 0.4s ease-in-out;
 }
 
 .action-card:hover {

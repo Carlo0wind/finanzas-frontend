@@ -1,0 +1,460 @@
+/* ==================== USER GUIDE ==================== */
+.user-guide {
+  min-height: 100vh;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ==================== HEADER ==================== */
+.guide-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem;
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+.btn-back:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.btn-back mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.guide-title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+}
+
+.guide-title mat-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+}
+
+.guide-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* ==================== CONTAINER ==================== */
+.guide-container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* ==================== SIDEBAR ==================== */
+.guide-sidebar {
+  position: sticky;
+  top: 2rem;
+  height: fit-content;
+}
+
+.guide-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+  background: #F3F4F6;
+}
+
+.nav-item.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #FFFFFF;
+}
+
+.nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.nav-icon mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: #FFFFFF;
+}
+
+.nav-item.active .nav-icon {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* ==================== CONTENT ==================== */
+.guide-content {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  min-height: 600px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #E5E7EB;
+}
+
+.section-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.section-icon mat-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  color: #FFFFFF;
+}
+
+.section-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+/* ==================== SUBSECTIONS ==================== */
+.subsections {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.subsection {
+  scroll-margin-top: 2rem;
+}
+
+.subsection-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 1rem 0;
+}
+
+.subsection-content {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #374151;
+}
+
+.subsection-content p {
+  margin: 0 0 1rem 0;
+  white-space: pre-line;
+}
+
+/* ==================== FORMULA BOX ==================== */
+.formula-box {
+  margin: 1.5rem 0;
+  background: #F0F9FF;
+  border: 2px solid #0EA5E9;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.formula-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #0EA5E9;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.formula-header mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.formula-content {
+  padding: 16px;
+  margin: 0;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #0C4A6E;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+/* ==================== EXAMPLE BOX ==================== */
+.example-box {
+  margin: 1.5rem 0;
+  background: #FEF3C7;
+  border: 2px solid #F59E0B;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.example-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #F59E0B;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.example-header mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.example-content {
+  padding: 16px;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #78350F;
+  white-space: pre-wrap;
+}
+
+/* ==================== IMAGE BOX ==================== */
+.image-box {
+  margin: 1.5rem 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.image-box img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1024px) {
+  .guide-container {
+    grid-template-columns: 1fr;
+  }
+
+  .guide-sidebar {
+    position: static;
+  }
+
+  .guide-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .guide-header {
+    padding: 1.5rem 1rem;
+  }
+
+  .guide-title {
+    font-size: 28px;
+  }
+
+  .guide-container {
+    padding: 1rem;
+  }
+
+  .guide-content {
+    padding: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 24px;
+  }
+
+  .subsection-title {
+    font-size: 18px;
+  }
+
+  .guide-nav {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==================== ESTILOS PARA CONTENIDO HTML ==================== */
+
+/* Títulos h3 y h4 dentro del contenido */
+.subsection-content h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  margin: 1.5rem 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #E5E7EB;
+}
+
+.subsection-content h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+  margin: 1.25rem 0 0.75rem 0;
+}
+
+/* Listas dentro del contenido */
+.subsection-content ul {
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+  list-style-type: none;
+}
+
+.subsection-content ul li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.subsection-content ul li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #667eea;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+/* Listas anidadas */
+.subsection-content ul ul {
+  margin: 0.5rem 0 0.5rem 0;
+  padding-left: 1rem;
+}
+
+.subsection-content ul ul li::before {
+  content: '◦';
+  color: #764ba2;
+}
+
+/* Párrafos dentro del contenido */
+.subsection-content p {
+  margin: 0 0 1rem 0;
+  line-height: 1.7;
+}
+
+/* Texto en negrita */
+.subsection-content strong {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Texto en cursiva/énfasis */
+.subsection-content em {
+  font-style: italic;
+  color: #6B7280;
+  background: #FEF3C7;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Espaciado entre secciones */
+.subsection-content > *:first-child {
+  margin-top: 0;
+}
+
+.subsection-content > *:last-child {
+  margin-bottom: 0;
+}
+
+/* Mejorar legibilidad de listas largas */
+.subsection-content ul li strong {
+  color: #667eea;
+}
+
+/* Hover effect en listas */
+.subsection-content ul li:hover {
+  background: #F9FAFB;
+  margin-left: -8px;
+  padding-left: calc(1.5rem + 8px);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
