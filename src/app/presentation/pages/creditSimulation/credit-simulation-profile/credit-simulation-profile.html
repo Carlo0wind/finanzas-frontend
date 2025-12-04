@@ -51,7 +51,7 @@
                 </div>
                 <div class="info-row">
                   <span class="info-label">Ingresos Mensuales:</span>
-                  <span class="info-value">{{ formatCurrency(selectedClient()!.monthlyIncome) }}</span>
+                  <span class="info-value">{{ formatClientCurrency(selectedClient()!.monthlyIncome) }}</span>
                 </div>
                 <div class="info-row">
                   <span class="info-label">Dependientes:</span>
@@ -112,7 +112,7 @@
                   <mat-icon>open_in_full</mat-icon>
                   {{ housing.area }} m²
                 </p>
-                <p class="card-price">{{ formatCurrency(housing.salePrice) }}</p>
+                <p class="card-price">{{ housing.currencySymbol }}{{ formatNumber(housing.salePrice) }}</p>
               </div>
             }
           </div>
@@ -659,7 +659,7 @@
             <div class="summary-section">
               <p class="summary-label">Vivienda</p>
               <p class="summary-value">{{ selectedHousing()!.title }}</p>
-              <p class="summary-price">{{ formatCurrency(selectedHousing()!.salePrice) }}</p>
+              <p class="summary-price">{{ formatHousingCurrency(selectedHousing()!.salePrice) }}</p>
             </div>
           }
 
@@ -681,11 +681,6 @@
             <div class="summary-section">
               <p class="summary-label">Cuota Inicial</p>
               <p class="summary-value">{{ formData().downPaymentPercentage }}%</p>
-              @if (selectedHousing()) {
-                <p class="summary-detail">
-                  {{ formatCurrency(selectedHousing()!.salePrice * formData().downPaymentPercentage / 100) }}
-                </p>
-              }
             </div>
           }
 

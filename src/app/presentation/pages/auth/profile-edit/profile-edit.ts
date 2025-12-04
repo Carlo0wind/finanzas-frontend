@@ -41,7 +41,7 @@ export class ProfileEdit implements OnInit{
       username: ['', [Validators.required]],
       ruc: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
       companyEmail: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.minLength(8)]] // Opcional
+      password: ['', [Validators.minLength(8), Validators.required]] // Opcional
     });
   }
 
@@ -96,7 +96,8 @@ export class ProfileEdit implements OnInit{
         this.profileForm.patchValue({
           companyName: response.companyName,
           username: response.username,
-          companyEmail: response.companyEmail
+          companyEmail: response.companyEmail,
+          password: response.password
         });
       },
       error: (error) => {
@@ -122,7 +123,7 @@ export class ProfileEdit implements OnInit{
       username: this.profileForm.value.username,
       ruc: this.profileForm.value.ruc,
       companyEmail: this.profileForm.value.companyEmail,
-      password: this.profileForm.value.password || 'KEEP_CURRENT' // Placeholder si no cambia
+      password: this.profileForm.value.password // Placeholder si no cambia
     };
 
     this.realStateService.updateRealStateCompany(this.companyId, updateRequest).subscribe({
@@ -133,7 +134,6 @@ export class ProfileEdit implements OnInit{
         localStorage.setItem('companyName', response.companyName);
         localStorage.setItem('username', response.username);
         localStorage.setItem('companyEmail', response.companyEmail);
-
         this.snackBar.open('¡Perfil actualizado exitosamente!', 'Cerrar', {
           duration: 3000,
           horizontalPosition: 'center',

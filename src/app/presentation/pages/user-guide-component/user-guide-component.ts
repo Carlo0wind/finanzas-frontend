@@ -134,82 +134,182 @@ export class UserGuideComponent {
       subsections: [
         {
           id: 'registrar-clientes',
-          title: '1. Registrar Clientes',
-          content: 'Accede a "Registrar Clientes" desde el panel de control. Completa los datos personales, información laboral (tipo de trabajo, años de experiencia, salario) y datos adicionales (historial crediticio, financiamiento vigente). Esta información se usará para validar requisitos de las entidades financieras.'
+          title: '1. Gestionar Clientes',
+          content:
+            'Gestión de Clientes\n\n\
+            Este módulo te permite administrar toda la información de las personas interesadas en adquirir una vivienda mediante el Crédito MiVivienda.\n\n\
+            Funcionalidades principales:\n\
+            • Ver listado de clientes: Visualiza todos los clientes asociados a tu perfil como asesor\n\
+            • Acciones disponibles: Ver detalles completos, editar o eliminar un cliente\n\
+            • Búsqueda rápida: Encuentra clientes por DNI, nombre o email\n\n\
+            Información requerida del cliente:\n\
+            • Información Personal: Datos básicos de identificación\n\
+            • Situación Laboral: Datos sobre su empleo y estabilidad económica\n\
+            • Información de Contacto\n\
+            • Condiciones Especiales: Discapacidad, desplazado o migrante retornado'
         },
+
         {
           id: 'registrar-ofertas',
-          title: '2. Registrar Ofertas',
-          content: 'Accede a "Registrar Ofertas" para agregar propiedades disponibles. Incluye ubicación completa (departamento, provincia, distrito), precio, tipo de vivienda (casa/departamento), estado (nueva/usada/en proyecto) y características adicionales.'
+          title: '2. Gestionar Ofertas Inmobiliarias',
+          content:
+            'Gestión de Ofertas Inmobiliarias\n\n\
+            Las ofertas inmobiliarias son propiedades disponibles para venta, con ubicación, características, precio y estado.\n\n\
+            Funcionalidades principales:\n\
+            • Ver listado de ofertas\n\
+            • Acciones disponibles: Editar o eliminar ofertas\n\
+            • Búsqueda avanzada: Por nombre, distrito o provincia\n\n\
+            Crear una nueva oferta requiere:\n\n\
+            1. Información Básica:\n\
+            • Título de la propiedad\n\
+            • Descripción detallada\n\n\
+            2. Ubicación Completa:\n\
+            • Provincia\n\
+            • Distrito\n\
+            • Dirección exacta\n\
+            • Departamento\n\n\
+            3. Características:\n\
+            • Área (m²)\n\
+            • Habitaciones\n\
+            • Estado: En Proyecto, En Construcción, Nuevo, Segunda Mano\n\
+            • Tipo: Sostenible o Tradicional\n\n\
+            4. Información Financiera:\n\
+            • Precio de venta\n\
+            • Tipo de moneda (Soles o Dólares)'
         },
+
         {
           id: 'ver-entidades',
           title: '3. Consultar Entidades Financieras',
-          content: 'En "Ver Entidades Financieras" puedes consultar el directorio completo de las 18 entidades autorizadas. Cada entidad muestra sus requisitos específicos: montos mínimos/máximos, tasas de interés, requisitos de cliente y condiciones especiales.'
+          content:
+            'Entidades Financieras\n\n\
+            Son instituciones autorizadas por el Fondo MiVivienda para otorgar créditos hipotecarios.\n\n\
+            Explorar entidades:\n\
+            • Cada entidad cuenta con un botón "Ver Detalles" con información completa\n\n\
+            Información disponible por entidad:\n\n\
+            Rangos de Financiamiento:\n\
+            • Precio de vivienda permitido\n\
+            • Monto de financiamiento\n\
+            • Cuota inicial requerida\n\
+            • Plazos del crédito\n\
+            • Período de gracia\n\n\
+            Requisitos del Cliente:\n\
+            • Condiciones necesarias para calificar\n\
+            • Documentación requerida\n\
+            • Perfil crediticio\n\n\
+            Condiciones de Vivienda:\n\
+            • Si acepta viviendas usadas o solo nuevas\n\
+            • Si permite financiamientos vigentes\n\
+            • Restricciones especiales'
         },
+
         {
           id: 'iniciar-simulacion',
-          title: '4. Iniciar Simulación',
-          content: 'En "Iniciar Simulación" sigue estos pasos:\n\n1. Selecciona el cliente\n2. Selecciona la vivienda\n3. Selecciona la entidad financiera\n4. Configura parámetros: plazo, cuota inicial, moneda, tasas, período de gracia, bono, costos iniciales y periódicos\n5. Genera la simulación\n6. Revisa los resultados'
+          title: '4. Gestión de Solicitudes de Simulación',
+          content:
+            'Simulación de Crédito\n\n\
+            Una simulación permite calcular cómo sería un crédito para un cliente, vivienda y entidad específica.\n\n\
+            Funcionalidades principales:\n\
+            • Ver listado de simulaciones\n\
+            • Editar, ver detalles o eliminar simulaciones\n\n\
+            Crear una simulación requiere:\n\n\
+            1. Selección Inicial:\n\
+            • Cliente\n\
+            • Oferta inmobiliaria\n\
+            • Entidad financiera\n\n\
+            2. Parámetros de Simulación:\n\
+            • Fecha de inicio\n\
+            • Moneda (Soles o Dólares)\n\
+            • Tasa de interés\n\
+            • COK\n\
+            • Período de gracia\n\
+            • Años de plazo\n\
+            • Cuota inicial\n\n\
+            3. Costos del Crédito:\n\n\
+            Costos Iniciales:\n\
+            • Gastos notariales\n\
+            • Gastos registrales\n\
+            • Tasación\n\
+            • Comisión de estudio\n\
+            • Comisión de activación\n\
+            • Honorarios profesionales\n\
+            • Documentación\n\n\
+            Costos Periódicos:\n\
+            • Comisión periódica\n\
+            • Portes\n\
+            • Gastos administrativos\n\
+            • Seguro de desgravamen\n\
+            • Seguro del inmueble\n\
+            • Envío de estado de cuenta\n\n\
+            Resultados de la Simulación:\n\
+            • Información general\n\
+            • Validación del crédito (viable o no)\n\
+            • Indicadores financieros: VAN, TIR, TCEA\n\
+            • Totales del crédito\n\
+            • Cronograma completo mes a mes'
         },
+
         {
           id: 'interpretar-resultados',
-          title: '5. Interpretar Resultados',
-          content: 'Los resultados muestran:\n\n• Banner de calificación (aprobado/rechazado)\n• Datos de entrada configurados\n• Indicadores financieros (COK, TIR, TCEA, VAN)\n• Totales del crédito\n• Cronograma de pagos detallado\n\nSi el cliente NO cumple requisitos, solo se muestran los datos de entrada con el mensaje de rechazo.'
-        },
-        {
-          id: 'comparar-simulaciones',
-          title: '6. Comparar Simulaciones',
-          content: 'Puedes crear múltiples simulaciones con diferentes entidades financieras o parámetros para el mismo cliente y vivienda. Esto permite comparar cuál opción es más conveniente según el VAN, TCEA y cuota mensual.'
+          title: '5. Perfil de Asesor',
+          content:
+            'Perfil de Asesor Inmobiliario\n\n\
+            Tu perfil contiene tu información personal y profesional para identificarte dentro del sistema.\n\n\
+            Gestión del perfil:\n\
+            • Ver información actual\n\
+            • Editar perfil\n\n\
+            Datos editables:\n\
+            • Razón social\n\
+            • Nombre de usuario\n\
+            • RUC\n\
+            • Correo electrónico\n\
+            • Contraseña\n\n\
+            Tip:\n\
+            • Mantén tu información actualizada para mejorar tu experiencia y comunicación con clientes.'
         }
       ]
     },
     {
-      id: 'costos',
-      title: 'Costos del Crédito',
-      icon: 'payments',
-      iconBg: '#8B5CF6',
-      subsections: [
-        {
-          id: 'costos-iniciales',
-          title: 'Costos Iniciales',
-          content: 'Son gastos que se pagan una sola vez al inicio del crédito:\n\n• Gastos Notariales\n• Gastos Registrales\n• Tasación\n• Comisión de Estudio\n• Comisión de Activación\n• Honorarios Profesionales\n• Documentación'
-        },
-        {
-          id: 'costos-periodicos',
-          title: 'Costos Periódicos',
-          content: 'Son gastos que se pagan mensualmente:\n\n• Comisión Periódica (fija)\n• Portes (fijo)\n• Gastos Administrativos (fijo)\n• Seguro de Desgravamen (% sobre saldo)\n• Seguro de Riesgo (% sobre saldo)\n• Envío de Estado de Cuenta (fijo)'
-        },
-        {
-          id: 'seguros',
-          title: 'Seguros Obligatorios',
-          content: 'Seguro de Desgravamen: Cubre el saldo del crédito en caso de fallecimiento o invalidez del titular. Se calcula como porcentaje sobre el saldo.\n\nSeguro de Riesgo: Protege la vivienda contra daños (incendio, terremoto, etc.). También se calcula como porcentaje sobre el saldo.'
-        }
-      ]
-    },
-    {
-      id: 'glosario',
-      title: 'Glosario',
+      id: 'glosario', // mantener
+      title: 'Marco Legal del Fondo MiVivienda',
       icon: 'book',
       iconBg: '#06B6D4',
       subsections: [
         {
-          id: 'glosario-a-c',
-          title: 'A - C',
-          content: '• Amortización: Parte del pago que reduce el capital pendiente\n• Capitalización: Frecuencia con que los intereses se agregan al capital\n• COK: Costo de Oportunidad del Capital\n• Cronograma: Plan detallado de pagos mes a mes\n• Cuota Inicial: Porcentaje del precio que paga el cliente al inicio'
-        },
-        {
-          id: 'glosario-d-m',
-          title: 'D - M',
-          content: '• Desgravamen: Seguro que cubre el saldo en caso de fallecimiento\n• Entidad Financiera: Banco o institución autorizada para otorgar créditos\n• Flujo de Caja: Movimiento de dinero (entradas y salidas)\n• Gracia: Período donde el pago se modifica\n• Método Francés: Sistema de cuotas constantes'
-        },
-        {
-          id: 'glosario-n-z',
-          title: 'N - Z',
-          content: '• Nominal: Tasa que no incluye capitalización\n• Plazo: Tiempo total del crédito en meses\n• Saldo: Capital pendiente de pago\n• TCEA: Tasa de Costo Efectivo Anual\n• TEM: Tasa Efectiva Mensual\n• TIR: Tasa Interna de Retorno\n• UIT: Unidad Impositiva Tributaria\n• VAN: Valor Actual Neto'
+          id: 'glosario-a-c', // mantener
+          title: 'Marco Legal',
+          content:
+            'El marco legal del Programa Fondo MIVIVIENDA S.A. establece su creación, funcionamiento y facultades para promover el acceso a la vivienda formal en el Perú. Incluye normas que regulan su estructura, financiamiento, subsidios, transparencia y mecanismos de apoyo social.\n\n\
+            Principales normas involucradas:\n\
+            • Ley N.º 26912 (1998): Crea el Fondo MIVIVIENDA para facilitar el acceso al crédito hipotecario a familias de ingresos medios y bajos.\n\
+            • Ley N.º 28579 y DS 024-2005-VIVIENDA: Transforman el Fondo en una Sociedad Anónima Estatal adscrita a FONAFE, con autonomía administrativa y financiera.\n\
+            • Decreto Legislativo N.º 1037 (2008): Amplía funciones e incorpora la promoción de habilitación urbana y oferta de vivienda social.\n\
+            • Ley N.º 31313 (2021): Introduce enfoque de desarrollo urbano sostenible y criterios de eficiencia energética.\n\
+            • Ley N.º 31613 (2022): Fortalece mecanismos de acceso al crédito para mujeres víctimas de violencia.\n\n\
+            Decretos y reglamentos:\n\
+            • DS N.º 011-2013-VIVIENDA: Aprueba el Reglamento del Fondo MIVIVIENDA.\n\
+            • DS N.º 010-2014-VIVIENDA: Regula la emisión de bonos corporativos del Fondo.\n\
+            • DS N.º 013-2015-VIVIENDA: Regula financiamiento para adquisición de terrenos.\n\
+            • DS N.º 008-2022-VIVIENDA: Actualiza disposiciones sobre subsidios y apoyo económico.\n\
+            • DS N.º 029-2023-PCM: Autoriza uso excepcional de fondos y bonos en regiones en emergencia.\n\n\
+            Normas financieras y resoluciones:\n\
+            • Resolución SBS N.º 1765-2005: Define reglas de transparencia en la contratación financiera.\n\
+            • Resolución SBS N.º 8181-2012: Reglamento de Transparencia e Información al usuario.\n\
+            • RM N.º 044-2013-VIVIENDA: Manual de Operaciones del Fondo MIVIVIENDA.\n\
+            • RM N.º 143-2017-VIVIENDA: Regula asignación de subsidios.\n\
+            • RM N.º 195-2019-VIVIENDA: Criterios de elegibilidad de beneficiarios.\n\
+            • RM N.º 140-2023-VIVIENDA: Subsidios y bonos para arrendatarios y damnificados.\n\n\
+            Leyes complementarias:\n\
+            • Ley N.º 26702: Regula el sistema financiero y supervisión de entidades participantes.\n\
+            • Ley N.º 27785: Control del uso de recursos públicos (Contraloría).\n\
+            • Ley N.º 28587: Transparencia y acceso a la información pública.\n\
+            • Ley N.º 28677: Inclusión financiera para sectores vulnerables.\n\
+            • Ley N.º 29033: Ley del Buen Pagador, incentiva al prestatario cumplido.\n\
+            • Ley N.º 30952: Crea el Nuevo Crédito MIVIVIENDA y sus lineamientos.'
         }
       ]
     }
+
   ];
 
   constructor(private router: Router) {}

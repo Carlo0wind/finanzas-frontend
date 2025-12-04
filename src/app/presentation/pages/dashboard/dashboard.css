@@ -37,6 +37,7 @@
   line-height: 40px;
   color: #111827;
   margin: 0 0 8px 0;
+  gap: 1rem;
 }
 
 .dashboard-subtitle {
@@ -77,9 +78,17 @@
 }
 
 /* ==================== SECCIONES ==================== */
-.stats-section,
+.stats-section{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 2rem;
+}
+
 .actions-section {
-  margin-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .section-title {
@@ -90,7 +99,7 @@
   font-size: 24px;
   font-weight: 700;
   color: #111827;
-  margin: 0 0 1.5rem 0;
+  margin: 1.5rem 1rem 1.5rem 0;
 }
 
 .section-title mat-icon {
@@ -136,12 +145,11 @@
 }
 
 .stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(700px, 1fr));
+  display: flex;
+  align-items: flex-start;
   gap: 1.5rem;
   margin-bottom: 2rem;
   max-width: 100%;
-  align-items: center;
 }
 
 .stat-card {
@@ -154,6 +162,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
   border: 2px solid transparent;
+  width: 100%;
 }
 
 .stat-card:hover {
@@ -237,9 +246,9 @@
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: 1.5rem;
+  gap: 1rem;
   justify-items: center;
-  max-width: 100%;
+  max-width: 900px;
   margin: 0 auto;
 }
 
