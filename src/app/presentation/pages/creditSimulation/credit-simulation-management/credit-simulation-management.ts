@@ -33,15 +33,13 @@ export class CreditSimulationManagement {
   private router = inject(Router);
 
   creditApplications = signal<CreditApplicationListItem[]>([]);
-  searchTerm = '';
+  searchTerm = signal('');
   isLoading = signal(true);
 
   // Filtro de simulaciones
   filteredSimulations = computed(() => {
-    const term = this.searchTerm.toLowerCase().trim();
-    if (!term) {
-      return this.creditApplications();
-    }
+    const term = this.searchTerm().toLowerCase().trim();
+    if (!term) return this.creditApplications();
 
     return this.creditApplications().filter(simulation =>
       simulation.clientName?.toLowerCase().includes(term) ||
@@ -220,4 +218,6 @@ export class CreditSimulationManagement {
     if (bonusType.includes('SOSTENIBLE')) return 'bonus-sustainable';
     return 'bonus-traditional';
   }
+
+  protected readonly HTMLInputElement = HTMLInputElement;
 }
