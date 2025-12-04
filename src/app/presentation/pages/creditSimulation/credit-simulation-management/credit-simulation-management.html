@@ -16,7 +16,7 @@
       <input
         type="text"
         class="search-input"
-        [(ngModel)]="searchTerm"
+        (input)="searchTerm.set($any($event).target.value)"
         placeholder="Busca por cliente, banca, oferta o tipo de bono...">
     </div>
 
