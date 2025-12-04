@@ -119,7 +119,7 @@ export interface RentIndicators {
 export interface Totals {
   totalInterest: number;
   totalCapitalAmortization: number;
-  totaLifeInsurance: number;  // ⚠️ TYPO del backend (mantener)
+  totaLifeInsurance: number;
   totalRiskInsurance: number;
   totalPeriodicCommission: number;
   totalAdministrationFees: number;

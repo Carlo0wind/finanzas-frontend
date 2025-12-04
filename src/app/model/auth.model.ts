@@ -23,7 +23,9 @@ export interface RealStateCompanyResponse {
   id: number;
   companyName: string;
   username: string;
+  ruc: string;
   companyEmail: string;
+  password: string;
 }
 
 export interface UpdateRealStateCompanyRequest {
@@ -31,5 +33,5 @@ export interface UpdateRealStateCompanyRequest {
   username: string;
   ruc: string;
   companyEmail: string;
-  password: string;
+  password?: string;
 }

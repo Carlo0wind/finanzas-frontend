@@ -644,7 +644,64 @@ export class CreditSimulationProfile {
     }
   }
 
-  // ==================== HELPERS ====================
+  private getCurrencySymbol(currency: CurrencyResource | undefined): string {
+    if (!currency) return 'S/ ';
+    const symbolMap: Record<string, string> = {
+      'SOLES': 'S/ ',
+      'soles': 'S/ ',
+      'Soles': 'S/ ',
+      'DOLARES': '$ ',
+      'DOLLARS': '$ ',
+      'Dólares': '$ ',
+      'dollars': '$ ',
+      'PEN': 'S/ ',
+      'USD': '$ ',
+      'S/ ': 'S/ ',
+      '$ ': '$ '
+    };
+    return symbolMap[currency.symbol] || symbolMap[currency.name] || currency.symbol + ' ';
+  }
+
+  clientCurrencySymbol = computed(() => {
+    const client = this.selectedClient();
+    if (!client) return 'S/ ';
+    const currency = this.currencies().find(c => c.id === client.currencyId);
+    return this.getCurrencySymbol(currency);
+  });
+
+  housingCurrencySymbol = computed(() => {
+    const housing = this.selectedHousing();
+    if (!housing) return 'S/ ';
+
+    const currency = this.currencies().find(c => c.id === housing.currencyId);
+    return this.getCurrencySymbol(currency);
+  });
+
+  formatClientCurrency(value: number): string {
+    const client = this.selectedClient();
+    const symbol = client?.currencySymbol || 'S/ ';
+    return `${symbol}${value.toLocaleString('es-PE', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })}`;
+  }
+
+  formatHousingCurrency(value: number): string {
+    const housing = this.selectedHousing();
+    const symbol = housing?.currencySymbol || 'S/ ';
+
+    return `${symbol}${value.toLocaleString('es-PE', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })}`;
+  }
+
+  formatNumber(value: number): string {
+    return value.toLocaleString('es-PE', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
   formatCurrency(value: number): string {
     const symbol = this.selectedCurrencySymbol();
     return `${symbol}${value.toLocaleString('es-PE', {
@@ -652,8 +709,6 @@ export class CreditSimulationProfile {
       maximumFractionDigits: 2
     })}`;
   }
-
-
 
   updateFormField(field: keyof CreateCreditApplicationRequest, value: any): void {
     this.formData.update(f => ({ ...f, [field]: value }));

@@ -30,10 +30,10 @@ export class FinanceEntityCardComponent {
       'CMAC Huancayo': 'assets/logos/caja-huancayo-1.svg',
       'CMAC Ica': 'assets/logos/caja-municipal-ica-37445.png',
       'CMAC Cusco': 'assets/logos/caja-cusco.png',
-      'CMAC Trujillo': 'assets/logos/caja-trujillo.svg',
+      'CMAC Trujillo': 'assets/logos/caja-trujillo.png',
       'CMAC Maynas': 'assets/logos/maynas.png',
       'CMAC Arequipa': 'assets/logos/caja-arequipa.png',
-      'CMAC Piura': 'assets/logos/caja-piura.png',
+      'CMAC Piura': 'assets/logos/caja-piura.jpg',
       'Financiera Efectiva': 'assets/logos/efectiva.png',
       'Financiera Santander': 'assets/logos/banco-santander-logo.svg',
       'EC Vivela': 'assets/logos/vivela.png'

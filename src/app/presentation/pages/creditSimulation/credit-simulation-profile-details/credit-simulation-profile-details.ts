@@ -218,6 +218,12 @@ export class CreditSimulationProfileDetails implements OnInit {
     });
   }
 
+  sortedPayments = computed(() => {
+    const app = this.creditApplication();
+    if (!app) return [];
+
+    return [...app.payments].sort((a, b) => a.orderNumber - b.orderNumber);
+  });
   // ==================== HELPERS PARA TABLA ====================
   getGracePeriodClass(type: string): string {
     switch (type) {

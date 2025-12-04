@@ -398,7 +398,7 @@
             </tr>
             </thead>
             <tbody>
-              @for (payment of creditApplication()!.payments; track payment.id) {
+              @for (payment of sortedPayments(); track payment.id){
                 <tr [class]="getGracePeriodClass(payment.gracePeriodType)">
                   <td class="cell-date">{{ formatDate(payment.paymentDate) }}</td>
                   <td class="cell-center">{{ payment.orderNumber }}</td>
