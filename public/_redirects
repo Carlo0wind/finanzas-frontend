@@ -1,0 +1,8 @@
+# Proxy reverso: Manda las peticiones /api a tu Spring Boot en Azure
+
+/api/* https://hominy-g3c4h5g8eza7d8h4.canadacentral-01.azurewebsites.net/api/:splat  200
+
+# Soporte SPA: Para que al recargar la página no de error 404
+
+/* /index.html  200
+
